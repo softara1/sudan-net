@@ -1,0 +1,244 @@
+/*
+ * Widget Slider Auto-Loader - Absolute inside Hero Section (Full Width)
+ * Theme: Smart Variable Extractor (Reads Real Theme Colors)
+ * Updated: Pure Name Extractor (Ignores all rank/group icons completely)
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    // دالة مساعدة لتحويل الألوان Hex إلى RGBA للشفافية
+    function hexToRgba(hex, alpha) {
+        if (!hex || hex.length < 7) return `rgba(0, 0, 0, ${alpha})`; 
+        let r = parseInt(hex.slice(1, 3), 16),
+            g = parseInt(hex.slice(3, 5), 16),
+            b = parseInt(hex.slice(5, 7), 16);
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+    // دالة ذكية لاستخراج قيمة المتغير من كود الصفحة
+    function getThemeColor(varName) {
+        let style = getComputedStyle(document.documentElement);
+        let color = style.getPropertyValue(varName);
+        if (!color) {
+            const styleTags = document.querySelectorAll('style');
+            for (let tag of styleTags) {
+                const regex = new RegExp(varName + ':\\s*([^;]+)');
+                const match = tag.innerHTML.match(regex);
+                if (match && match[1]) {
+                    color = match[1].trim();
+                    break;
+                }
+            }
+        }
+        if (!color) {
+            if (varName === '--msr-red') color = '#2563EB'; 
+            else if (varName === '--msr-dark-border') color = '#E2E8F0';
+            else if (varName === '--msr-dark-card') color = '#FFFFFF';
+            else if (varName === '--msr-text-main') color = '#1E293B';
+            else if (varName === '--msr-text-sub') color = '#475569';
+            else color = '#1E293B';
+        }
+        return color;
+    }
+    const themeRed = getThemeColor('--msr-red');
+    const themeBorder = getThemeColor('--msr-dark-border');
+    const themeBg = getThemeColor('--msr-dark-card');
+    const themeText = getThemeColor('--msr-text-main');
+    const themeTextSub = getThemeColor('--msr-text-sub');
+    if (!document.getElementById('msr-slider-hero-styles')) {
+        const style = document.createElement('style');
+        style.id = 'msr-slider-hero-styles';
+        style.innerHTML = `
+            /* حاوية السلايدر */
+            .msr-hero-members-slider {
+                font-family: 'Tajawal', sans-serif;
+                width: 100% !important; max-width: 100% !important;
+                margin: 0 !important; padding: 0 !important;
+                background: transparent !important; border: none !important;
+                border-radius: 0 !important; box-shadow: none !important;
+                overflow: visible; position: absolute !important; 
+                left: 0; right: 0; top: 80px; 
+                z-index: 50 !important; direction: rtl;
+            }
+            .slider-header { display: none; }
+            .msr-slider-container-hero {
+                position: relative; display: flex; align-items: center;
+                height: 105px; padding: 0 50px; box-sizing: border-box;
+                overflow: hidden; width: 100%;
+            }
+            .msr-track-hero {
+                display: flex; gap: 16px; overflow-x: auto;
+                scroll-behavior: smooth; scrollbar-width: none;
+                width: 100%; height: 100%; align-items: center;
+                padding: 8px 0; direction: rtl;
+            }
+            .msr-track-hero::-webkit-scrollbar { display: none; }
+            .msr-item-hero {
+                flex: 0 0 76px; width: 76px; height: 100%;
+                display: flex; flex-direction: column; align-items: center;
+                justify-content: center; text-decoration: none !important;
+                transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                padding: 6px; position: relative; background: transparent !important;
+            }
+            .msr-item-hero:hover { transform: translateY(-5px); }
+            /* الصورة الرمزية */
+            .msr-avatar-hero {
+                width: 48px !important; height: 48px !important;
+                max-width: 48px !important; max-height: 48px !important;
+                min-width: 48px !important; min-height: 48px !important;
+                border-radius: 50% !important; overflow: hidden !important;
+                border: 2px solid ${themeBorder} !important; 
+                margin-bottom: 6px; position: relative; background: ${themeBg};
+                transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                display: block !important; flex-shrink: 0 !important;
+            }
+            .msr-avatar-hero img { 
+                width: 100% !important; height: 100% !important;
+                object-fit: cover !important; border-radius: 50% !important;
+                position: absolute !important; top: 0 !important; left: 0 !important;
+            }
+            .msr-item-hero:hover .msr-avatar-hero {
+                border-color: ${themeRed} !important; transform: scale(1.12);
+                box-shadow: 0 0 18px ${hexToRgba(themeRed, 0.4)};
+            }
+            .avatar-active {
+                border-color: ${themeRed} !important;
+                animation: pulse-glow-theme 2s infinite;
+            }
+            @keyframes pulse-glow-theme {
+                0% { box-shadow: 0 0 0 0 ${hexToRgba(themeRed, 0.4)}; }
+                70% { box-shadow: 0 0 0 8px rgba(0, 0, 0, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+            }
+            /* اسم العضو النقي فقط */
+            .msr-name-hero {
+                font-size: 11px; font-weight: 700; color: ${themeText} !important;
+                text-align: center; width: 100%; 
+                white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+                margin-bottom: 3px; display: block !important;
+                flex-shrink: 0 !important; line-height: 1.3; direction: rtl;
+            }
+            .msr-item-hero:hover .msr-name-hero { color: ${themeRed} !important; }
+            /* إشارة الحالة */
+            .msr-stat-hero {
+                display: inline-flex !important; justify-content: center; align-items: center;
+                width: auto !important; max-width: 76px; font-size: 9px; font-weight: 600;
+                color: ${themeTextSub} !important; background: rgba(241, 245, 249, 0.8) !important;
+                padding: 2px 6px !important; border-radius: 6px !important;
+                border: 1px solid ${themeBorder} !important; white-space: nowrap;
+                overflow: hidden; text-overflow: ellipsis; direction: rtl;
+                transition: all 0.2s; flex-shrink: 0 !important; line-height: 1.3;
+            }
+            .stat-active {
+                color: #ffffff !important; background: ${themeRed} !important;
+                border: 1px solid ${themeRed} !important;
+                box-shadow: 0 0 8px ${hexToRgba(themeRed, 0.3)};
+            }
+            .msr-container { margin-top: 21px; }
+            /* أزرار التنقل */
+            .nav-btn-hero {
+                position: absolute; top: 50%; transform: translateY(-50%);
+                width: 28px; height: 28px; border-radius: 50%;
+                background: ${themeBg} !important; border: 1px solid ${themeBorder} !important;
+                color: ${themeTextSub} !important; cursor: pointer; display: flex;
+                align-items: center; justify-content: center; z-index: 5;
+                font-size: 11px; transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            }
+            .nav-btn-hero:hover {
+                background: ${themeRed} !important; color: #ffffff !important;
+                border-color: ${themeRed}; transform: translateY(-50%) scale(1.12);
+                box-shadow: 0 0 16px ${hexToRgba(themeRed, 0.4)};
+            }
+            .btn-prev { right: 10px; }
+            .btn-next { left: 10px; }
+            @media (max-width: 768px) {
+                .msr-slider-container-hero { padding: 0 15px; height: 95px; }
+                .msr-item-hero { width: 64px; flex: 0 0 64px; }
+                .msr-avatar-hero {
+                    width: 42px !important; height: 42px !important;
+                    max-width: 42px !important; max-height: 42px !important;
+                    min-width: 42px !important; min-height: 42px !important;
+                }
+                .msr-name-hero { font-size: 10px; max-width: 64px; }
+                .msr-stat-hero { max-width: 64px; font-size: 8px; }
+                .nav-btn-hero { display: none; }
+            }
+        `;
+        document.head.appendChild(style);
+        if (!document.querySelector('link[href*="font-awesome"]')) {
+            const faLink = document.createElement('link');
+            faLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+            faLink.rel = 'stylesheet'; document.head.appendChild(faLink);
+        }
+        if (!document.querySelector('link[href*="Tajawal"]')) {
+            const fontLink = document.createElement('link');
+            fontLink.href = 'https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap';
+            fontLink.rel = 'stylesheet'; document.head.appendChild(fontLink);
+        }
+    }
+    const targetHeader = document.querySelector('header');
+    const targetHero = document.querySelector('.msr-hero');
+    if (targetHeader && targetHero) {
+        const sliderWrapper = document.createElement('div');
+        sliderWrapper.className = 'msr-hero-members-slider';
+        targetHero.prepend(sliderWrapper);
+        sliderWrapper.innerHTML = `
+            <div class="msr-slider-container-hero">
+                <button class="nav-btn-hero btn-prev"><i class="fas fa-chevron-right"></i></button>
+                <div class="msr-track-hero" id="hero-members-track">
+                    <div style="color:${themeTextSub}; font-size:12px; padding:20px; width:100%; text-align:center;">جاري التحميل...</div>
+                </div>
+                <button class="nav-btn-hero btn-next"><i class="fas fa-chevron-left"></i></button>
+            </div>
+        `;
+        function updateSliderPosition() {
+            const headerHeight = targetHeader.offsetHeight;
+            const heroTop = targetHero.getBoundingClientRect().top + window.scrollY;
+            sliderWrapper.style.top = `${headerHeight - heroTop}px`;
+        }
+        updateSliderPosition();
+        window.addEventListener('resize', updateSliderPosition);
+        window.addEventListener('scroll', updateSliderPosition, { passive: true });
+        const track = document.getElementById('hero-members-track');
+        const btnPrev = sliderWrapper.querySelector('.btn-prev');
+        const btnNext = sliderWrapper.querySelector('.btn-next');
+        btnPrev.onclick = () => track.scrollBy({ left: 300, behavior: 'smooth' });
+        btnNext.onclick = () => track.scrollBy({ left: -300, behavior: 'smooth' });
+        fetch('/memberlist?mode=lastvisit&order=DESC&submit=Ok')
+        .then(res => res.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const members = doc.querySelectorAll('.member-block');
+            track.innerHTML = '';
+            members.forEach(block => {
+                const nameTag = block.querySelector('.member-header a[href^="/u"]');
+                const link = nameTag ? nameTag.getAttribute('href') : '#';
+                let name = 'عضو';
+                if (nameTag) {
+                    // أخذ نسخة من وسم الاسم لتنظيفه بدون التأثير على الهيكل الأصلي
+                    const clone = nameTag.cloneNode(true);
+                    // إزالة جميع الأيقونات (صور وخطوط) من النسخة لتجنب ظهور نصوص مثل verified
+                    clone.querySelectorAll('img, i').forEach(el => el.remove());
+                    // استخراج النص النقي فقط
+                    name = clone.textContent.trim() || 'عضو';
+                }
+                const avatar = block.querySelector('.avatar-default img')?.src || 'https://2img.net/i/fa/modernbb/pp-blank-thumb-38px.png';
+                const details = block.querySelector('.member-details')?.textContent || '';
+                const isOnline = details.includes("اليوم");
+                const statusText = isOnline ? "نشط اليوم" : "زائر سابق";
+                const item = document.createElement('a');
+                item.href = link;
+                item.className = 'msr-item-hero';
+                const statClass = isOnline ? 'msr-stat-hero stat-active' : 'msr-stat-hero';
+                item.innerHTML = `
+                    <div class="msr-avatar-hero ${isOnline ? 'avatar-active' : ''}">
+                        <img src="${avatar}" alt="${name}" loading="lazy">
+                    </div>
+                    <span class="msr-name-hero">${name}</span>
+                    <div class="${statClass}">${statusText}</div>
+                `;
+                track.appendChild(item);
+            });
+        }).catch(err => {
+            track.innerHTML = `<div style="color:${themeTextSub}; font-size:12px; padding:20px; width:100%; text-align:center;">حدث خطأ في الاتصال</div>`;
+        });
+    }
+});

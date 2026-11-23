@@ -1,0 +1,406 @@
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Stars of Today - Modern Theme Edition</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /><link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" /><style>
+    /* =========================================
+       CSS STYLES - MODERN LIGHT THEME
+       ========================================= */
+    #msr-isolation-zone {
+        font-family: 'Tajawal', sans-serif !important;
+        line-height: 1.6 !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+        margin: 20px auto !important;
+        color: #1E293B !important;
+        width: 100%;
+        max-width: 1280px;
+        box-sizing: border-box;
+        display: block;
+        position: relative;
+    }
+    #msr-isolation-zone *, 
+    #msr-isolation-zone *::before, 
+    #msr-isolation-zone *::after {
+        box-sizing: border-box;
+    }
+    #msr-isolation-zone a { text-decoration: none !important; color: inherit; }
+    #msr-isolation-zone {
+        --msr-blue: #2563EB;
+        --msr-cyan: #0EA5E9;
+        --msr-violet: #8B5CF6;
+        --soft-card-bg: #FFFFFF;
+        --soft-text-main: #1E293B;
+        --soft-text-light: #475569;
+        --soft-border: #E2E8F0;
+        --soft-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        --soft-radius: 16px;
+    }
+    /* LAYOUT */
+    #msr-isolation-zone .slider-wrapper-pro {
+        margin: 0 auto;
+        padding: 0 10px;
+    }
+    /* عنوان القسم */
+    #msr-isolation-zone .pro-stars-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px 15px 10px;
+        margin-bottom: 10px;
+    }
+    #msr-isolation-zone .pro-sub-title-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex: 1;
+    }
+    #msr-isolation-zone .pro-sub-title {
+        color: var(--soft-text-main);
+        font-size: 20px;
+        font-weight: 800;
+        white-space: nowrap;
+        display: flex; 
+        align-items: center; 
+        gap: 10px;
+    }
+    #msr-isolation-zone .pro-sub-title i { 
+        color: #F59E0B; 
+        font-size: 22px;
+    }
+    #msr-isolation-zone .pro-sub-title .blue-text {
+        color: var(--msr-blue);
+    }
+    #msr-isolation-zone .msr-title-line {
+        flex-grow: 1;
+        height: 2px;
+        background: var(--soft-border);
+        border-radius: 50px;
+    }
+    /* الحاوية الكبيرة */
+    #msr-isolation-zone .pro-stars-section,
+    #msr-isolation-zone .pro-slider-container-sm {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        position: relative;
+        display: block;
+    }
+    /* حاوية التمرير - افتراضي للجوال (صف واحد مع تمرير) */
+    #msr-isolation-zone .pro-slider-track {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        display: flex;
+        gap: 15px;
+        flex-wrap: nowrap; /* منع النزول لسطر جديد */
+        overflow-x: auto; /* تفعيل التمرير الأفقي */
+        overflow-y: hidden;
+        padding: 15px 5px; /* مساحة لظل البطاقة */
+        width: 100%;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch; /* تمرير سلس على الآيفون */
+        scroll-snap-type: x mandatory; /* تثبيت التمرير على البطاقات */
+    }
+    /* إخفاء شريط التمرير لجميع المتصفحات */
+    #msr-isolation-zone .pro-slider-track::-webkit-scrollbar {
+        display: none;
+    }
+    #msr-isolation-zone .pro-slider-track {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+    /* CARD DESIGN */
+    #msr-isolation-zone .pro-card {
+        flex: 0 0 140px; /* عرض ثابت للبطاقة على الجوال لتفعيل التمرير */
+        min-width: 140px;
+        max-width: 140px;
+        background: var(--soft-card-bg) !important;
+        border: 1px solid var(--soft-border) !important;
+        border-radius: var(--soft-radius);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 10px;
+        position: relative;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: var(--soft-shadow) !important;
+        overflow: hidden;
+        scroll-snap-align: start; /* تثبيت بداية البطاقة عند التمرير */
+    }
+    #msr-isolation-zone .pro-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        border-color: var(--msr-blue) !important;
+        box-shadow: 0 15px 30px rgba(37, 99, 235, 0.1) !important;
+        z-index: 10;
+    }
+    /* Avatar Wrapper */
+    #msr-isolation-zone .pro-avatar-wrapper {
+        width: 65px; 
+        height: 65px;
+        border-radius: 50%;
+        padding: 3px; 
+        background: #F1F5F9; 
+        margin-bottom: 12px;
+        position: relative;
+        transition: 0.3s;
+    }
+    #msr-isolation-zone .pro-avatar-inner {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #FFFFFF;
+        border: 2px solid #FFFFFF;
+    }
+    #msr-isolation-zone .pro-avatar-inner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    #msr-isolation-zone .pro-card:hover .pro-avatar-inner img {
+        transform: scale(1.1);
+    }
+    /* Badge */
+    #msr-isolation-zone .rank-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--msr-blue);
+        background: rgba(37, 99, 235, 0.1);
+        border: 1px solid rgba(37, 99, 235, 0.2);
+        padding: 3px 10px;
+        border-radius: 20px;
+        text-align: center;
+        margin-bottom: 6px;
+        white-space: nowrap;
+        transition: 0.3s;
+    }
+    /* Crown */
+    #msr-isolation-zone .star-crown {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        color: var(--msr-blue);
+        font-size: 16px;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        z-index: 2;
+        animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-4px); }
+        100% { transform: translateY(0); }
+    }
+    /* Name & Info */
+    #msr-isolation-zone .pro-info {
+        text-align: center;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+    }
+    #msr-isolation-zone .pro-name {
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--soft-text-main);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 95%;
+        line-height: 1.3;
+        transition: color 0.3s;
+    }
+    #msr-isolation-zone .pro-card:hover .pro-name {
+        color: var(--msr-blue);
+    }
+    #msr-isolation-zone .pro-stat {
+        font-size: 10px;
+        color: var(--soft-text-light);
+        background: #F8FAFC;
+        padding: 3px 8px;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: 600;
+        margin-top: 4px;
+        border: 1px solid var(--soft-border);
+    }
+    #msr-isolation-zone .pro-stat i {
+        color: var(--msr-blue);
+        font-size: 10px;
+    }
+    /* Responsive Breakpoints - للشاشات الكبيرة نعود للنظام الشبكي */
+    @media (min-width: 768px) {
+        #msr-isolation-zone .pro-slider-track {
+            flex-wrap: wrap; /* السماح بالنزول لسطر جديد */
+            justify-content: center;
+            overflow-x: visible; /* إلغاء التمرير الأفقي */
+            scroll-snap-type: none; /* إلغاء التثبيت */
+            gap: 20px;
+        }
+        #msr-isolation-zone .pro-card {
+            flex: 0 0 calc(25% - 15px); /* 4 بطاقات */
+            min-width: 150px;
+            max-width: 100%;
+            padding: 20px 15px;
+        }
+        #msr-isolation-zone .pro-avatar-wrapper { width: 70px; height: 70px; margin-bottom: 15px; }
+        #msr-isolation-zone .rank-badge { font-size: 11px; padding: 4px 12px; }
+        #msr-isolation-zone .pro-name { font-size: 14px; }
+        #msr-isolation-zone .pro-stat { font-size: 11px; padding: 4px 10px; }
+        #msr-isolation-zone .pro-stat i { font-size: 12px; }
+        #msr-isolation-zone .star-crown { font-size: 18px; top: 10px; left: 10px; }
+    }
+    @media (min-width: 1024px) {
+        #msr-isolation-zone .pro-card {
+            flex: 0 0 calc(20% - 16px); /* 5 بطاقات */
+        }
+    }
+.box-body {
+    background-color: #ffffff00;
+    border-radius: 3px;
+    box-shadow: 0 2px 3px rgb(0 0 0 / 0%), 0 0 2px rgb(0 0 0 / .1);
+    margin-top: 6px;
+    padding: 10px;
+    overflow: hidden;
+    word-break: normal;
+}
+.post, .block .block-content, .box-body, .forum-section, .posts-section {
+      background-color: #ffffff00;
+    box-shadow: 0 0px 0px rgb(0 0 0 / .05) !important;
+    border-radius: 16px;
+    line-height: 22px;
+    margin-top: 6px;
+    border: 0px solid #E2E8F0 !important;
+}
+</style>  
+<!--      THE ISOLATION ZONE      -->
+<div id="msr-isolation-zone">
+ <div class="slider-wrapper-pro">
+ <div class="pro-stars-section">
+ <!--      عنوان مطابق لعناوين القالب      -->                                      
+ <div class="pro-stars-header">
+ <div class="pro-sub-title-container">
+ <div class="pro-sub-title">
+                                                  <em class="fas fa-star"></em> نجوم <span class="blue-text">اليوم</span>                                                             
+ </div>
+ <div class="msr-title-line">
+ </div>
+ </div>
+ </div>
+ <div class="pro-slider-container-sm">
+ <div class="pro-slider-track" id="stars-track">
+ <!--      سيتم تعبئة البيانات هنا      -->                                                  
+ </div>
+ </div>
+ </div>
+ </div>
+</div>
+ <script>
+const widget = document.getElementById('msr-isolation-zone');
+const starsTrack = widget.querySelector('#stars-track');
+function getArabicOrdinal(n) {
+    const ordinals = ["الأول", "الثاني", "الثالث", "الرابع", "الخامس", "السادس", "السابع", "الثامن", "التاسع", "العاشر"];
+    const suffix = ordinals[n - 1] || n;
+    return `النجم ${suffix}`;
+}
+function createProCard(member, rankIndex) {
+    const card = document.createElement('a');
+    card.href = member.link;
+    card.className = 'pro-card';
+    const rankLabel = getArabicOrdinal(rankIndex + 1);
+    const showCrown = (rankIndex === 0);
+    card.innerHTML = `
+        ${showCrown ? '<i class="fas fa-crown star-crown"></i>' : ''}
+        <div class="pro-avatar-wrapper">
+            <div class="pro-avatar-inner">
+                <img src="${member.avatar}" loading="lazy" alt="${member.name}">
+            </div>
+        </div>
+        <div class="pro-info">
+            <div class="rank-badge">${rankLabel}</div>
+            <div class="pro-name">${member.name}</div>
+            <div class="pro-stat">
+                <i class="fas fa-comment-alt"></i> ${member.stat}
+            </div>
+        </div>
+    `;
+    return card;
+}
+function loadStars() {
+    const starsSection = widget.querySelector('.pro-stars-section');
+    // Skeleton Loading
+    starsTrack.innerHTML = `
+        <div class="pro-card">
+            <div class="pro-avatar-wrapper" style="background:#E2E8F0;"><div class="pro-avatar-inner" style="background:#CBD5E1;"></div></div>
+            <div class="pro-info"><div class="rank-badge" style="background:#E2E8F0; color:#E2E8F0; border-color:#E2E8F0;">...</div><div class="pro-name" style="background:#E2E8F0; color:#E2E8F0; border-radius:8px; height:14px; width:60%;"></div></div>
+        </div>
+        <div class="pro-card">
+            <div class="pro-avatar-wrapper" style="background:#E2E8F0;"><div class="pro-avatar-inner" style="background:#CBD5E1;"></div></div>
+            <div class="pro-info"><div class="rank-badge" style="background:#E2E8F0; color:#E2E8F0; border-color:#E2E8F0;">...</div><div class="pro-name" style="background:#E2E8F0; color:#E2E8F0; border-radius:8px; height:14px; width:60%;"></div></div>
+        </div>
+        <div class="pro-card">
+            <div class="pro-avatar-wrapper" style="background:#E2E8F0;"><div class="pro-avatar-inner" style="background:#CBD5E1;"></div></div>
+            <div class="pro-info"><div class="rank-badge" style="background:#E2E8F0; color:#E2E8F0; border-color:#E2E8F0;">...</div><div class="pro-name" style="background:#E2E8F0; color:#E2E8F0; border-radius:8px; height:14px; width:60%;"></div></div>
+        </div>
+    `;
+    if(starsSection) starsSection.style.display = 'block';
+    fetch('/memberlist?mode=today_posters')
+    .then(res => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.text();
+    })
+    .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const members = doc.querySelectorAll('.member-block');
+        starsTrack.innerHTML = '';
+        if (members.length === 0) {
+            if(starsSection) starsSection.style.display = 'none'; 
+            return;
+        }
+        if(starsSection) starsSection.style.display = 'block';
+        let membersData = [];
+        members.forEach(block => {
+            const nameTag = block.querySelector('.member-header a[href^="/u"]');
+            const link = nameTag ? nameTag.getAttribute('href') : '#';
+            const name = nameTag ? nameTag.textContent.trim() : 'عضو';
+            const avatar = block.querySelector('.avatar-default img')?.src || 'https://2img.net/i/fa/modernbb/pp-blank-thumb-38px.png';
+            const details = block.querySelector('.member-details')?.textContent || '';
+            let statValue = 0;
+            let stat = '0';
+            const postMatch = details.match(/(?:مساهمات|مشاركات|رسائل|Posts|Messages)\s*[:：]?\s*(\d+)/i);
+            if (postMatch && postMatch[1]) {
+                statValue = parseInt(postMatch[1], 10);
+                stat = statValue.toString();
+            } else {
+                const numbersInDetails = details.match(/\d+/g);
+                if (numbersInDetails && numbersInDetails.length > 0) {
+                    statValue = parseInt(numbersInDetails[numbersInDetails.length - 1], 10);
+                    stat = statValue.toString();
+                }
+            }
+            const starData = { link, avatar, name, stat, statValue };
+            membersData.push(starData);
+        });
+        membersData.sort((a, b) => b.statValue - a.statValue);
+        membersData.forEach((member, index) => {
+            starsTrack.appendChild(createProCard(member, index));
+        });
+    })
+    .catch(err => {
+        console.error("Error loading stars:", err);
+        starsTrack.innerHTML = `<div style="width:100%; text-align:center; padding:30px; color:#94A3B8;"><i class="fas fa-exclamation-circle" style="font-size:24px; margin-bottom:10px; display:block;"></i>حدث خطأ في التحميل</div>`;
+    });
+}
+document.addEventListener('DOMContentLoaded', () => {
+    loadStars();
+});
+</script>

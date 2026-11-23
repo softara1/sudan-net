@@ -1,0 +1,592 @@
+<!-- شريط الأدوات العلوي (الأيقونات فقط) -->
+<ul class="action-bar action-bar-top">
+    <!-- BEGIN switch_user_logged_in -->
+    <li class="msr-icon-btn" data-text="{L_SEARCH_NEW}">
+        <a href="{U_SEARCH_NEW}">
+            <i class="material-symbols-outlined">new_releases</i>
+        </a>
+    </li>
+    <li class="msr-icon-btn" data-text="{L_SEARCH_SELF}">
+        <a href="{U_SEARCH_SELF}">
+            <i class="material-symbols-outlined">account_box</i>
+        </a>
+    </li>
+    <!-- END switch_user_logged_in -->
+    <li class="msr-icon-btn" data-text="{L_SEARCH_UNANSWERED}">
+        <a href="{U_SEARCH_UNANSWERED}">
+            <i class="material-symbols-outlined">chat_bubble_outline</i>
+        </a>
+    </li>
+    <!-- BEGIN switch_user_logged_in -->
+    <li class="msr-icon-btn" data-text="{L_MARK_FORUMS_READ}">
+        <a href="{U_MARK_READ}" accesskey="m">
+            <i class="material-symbols-outlined">done_all</i>
+        </a>
+    </li>
+    <!-- END switch_user_logged_in -->
+</ul>
+<!-- BEGIN catrow -->
+<!-- BEGIN tablehead -->
+<div class="msr-category-box {catrow.tablehead.TYPE_TABLE_SECTION}" data-cindex="{catrow.tablehead.ID}">
+    <div class="msr-category-header">
+        <div class="msr-category-title">
+            <span>{catrow.tablehead.L_FORUM}</span>
+            <div class="msr-title-line"></div>
+        </div>
+        <div class="msr-category-toggle" title="إخفاء/إظهار الأقسام">
+            <div class="toggle-icon-a"></div>
+            <div class="toggle-icon-b"></div>
+        </div>
+    </div>
+    <div class="forum-container">
+    <!-- END tablehead -->
+    <!-- BEGIN forumrow -->
+    <div class="forum-card {catrow.forumrow.FOLDER_CLASSNAME}">
+        <a href="{catrow.forumrow.U_VIEWFORUM}" class="forum-image-link">
+            <div class="forum-image-container">
+                <div class="RMAVATAR">
+                    <span class="avatarcp">{catrow.forumrow.FORUM_DESC}</span>
+                </div>
+            </div>
+        </a>
+        <div class="forum-name">
+            <div class="stats-container">
+                <span class="forum-stat-topics">
+                    <i class="material-symbols-outlined">chat_bubble</i> {catrow.forumrow.TOPICS}
+                </span>
+                <span class="forum-stat-posts">
+                    <i class="material-symbols-outlined">forum</i> {catrow.forumrow.POSTS}
+                </span>
+            </div>
+        </div>
+        <div class="forum-title-section">
+            <a href="{catrow.forumrow.U_VIEWFORUM}" class="forum-title-link">
+                {catrow.forumrow.FORUM_NAME}
+            </a>
+            <div class="sub-forums-chips">{catrow.forumrow.L_LINKS}{catrow.forumrow.LINKS}</div>
+        </div>
+        <div class="card-body">
+            <p>{catrow.forumrow.FORUM_DESC}</p>
+            <div id="lastpost">
+                <div class="lastpost-info">
+                    <!-- BEGIN avatar -->
+                    <span class="lastpost-avatar">{catrow.forumrow.avatar.LAST_POST_AVATAR}</span>
+                    <!-- END avatar -->
+                    <!-- BEGIN ads -->
+                    <img src="{catrow.forumrow.ads.IMG}" alt="{catrow.forumrow.ads.TITLE}"/>
+                    <!-- END ads -->
+                    <div class="lastpost-details">
+                        <!-- BEGIN switch_topic_title -->
+                        <a href="{catrow.forumrow.U_LATEST_TOPIC}" class="lastpost-title" title="{catrow.forumrow.LATEST_TOPIC_TITLE}">
+                            {catrow.forumrow.LATEST_TOPIC_NAME}
+                        </a>
+                        <!-- END switch_topic_title -->
+                        <!-- BEGIN ads -->
+                        <a class="lastpost-title" href="{catrow.forumrow.ads.LINK}" title="{catrow.forumrow.ads.TITLE}">{catrow.forumrow.ads.TITLE}</a>
+                        <!-- END ads -->
+                        <div class="lastpost-meta">
+                            <!-- BEGIN ads -->
+                            <span class="forum-lastpost-location">
+                                <i class="material-symbols-outlined">place</i>{catrow.forumrow.ads.LOCATION}
+                            </span>
+                            <!-- END ads -->
+                            <span class="lastpost-author">
+                                <i class="material-symbols-outlined">person</i>{catrow.forumrow.USER_LAST_POST}
+                                <!-- BEGIN ads -->
+                                {catrow.forumrow.ads.ALIAS}
+                                <!-- END ads -->
+                            </span>
+                            <span class="lastpost-date">
+                                <i class="material-symbols-outlined">access_time</i><a href="{catrow.forumrow.U_LATEST_TOPIC_POST}">{catrow.forumrow.LAST_POST_HOUR}</a>
+                                <!-- BEGIN ads -->
+                                {catrow.forumrow.ads.DATE}
+                                <!-- END ads -->
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <a href="{catrow.forumrow.U_LATEST_TOPIC}" class="go-to-lastpost" title="الذهاب إلى آخر مشاركة">
+                    <i class="material-symbols-outlined">arrow_forward</i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- END forumrow -->
+    <!-- BEGIN tablefoot -->
+    </div>
+</div>
+<!-- END tablefoot -->
+<!-- END catrow -->
+<!-- BEGIN switch_forum_images -->
+<div class="msr-category-box">
+    <div class="msr-category-header">
+        <div class="msr-category-title">
+            <span>{switch_forum_images.TITLE}</span>
+            <div class="msr-title-line"></div>
+        </div>
+    </div>
+    <!-- تم إزالة forum-container واستبدالها بحاوية عادية لمنع تعارض الـ Flexbox مع سكربت الصور -->
+    <div style="padding: 0 10px; max-width: 1280px; margin: 0 auto;">
+        <!-- تم تغيير overflow إلى y:auto للسماح بالتمرير لأسفل مع الحفاظ على المظهر الأصلي -->
+        <div class="container-imgs-list" style="max-height: 500px; border-radius: 12px; overflow-y: auto;" id="imageList">
+            {switch_forum_images.SCRIPTS}
+        </div>
+    </div>
+</div>
+<!-- END switch_forum_images -->
+<!-- BEGIN switch_on_index -->
+<ul class="action-bar action-bar-bottom">
+    <li class="msr-icon-btn" data-text="{L_TODAY_ACTIVE}">
+        <a href="{U_TODAY_ACTIVE}">
+            <i class="material-symbols-outlined">local_fire_department</i>
+        </a>
+    </li>
+    <li class="msr-icon-btn" data-text="{L_TODAY_POSTERS}">
+        <a href="{U_TODAY_POSTERS}">
+            <i class="material-symbols-outlined">groups</i>
+        </a>
+    </li>
+    <li class="msr-icon-btn" data-text="{L_OVERALL_POSTERS}">
+        <a href="{U_OVERALL_POSTERS}">
+            <i class="material-symbols-outlined">emoji_events</i>
+        </a>
+    </li>
+    <!-- BEGIN switch_delete_cookies -->
+    <li class="msr-icon-btn msr-icon-btn-danger" data-text="{switch_on_index.switch_delete_cookies.L_DELETE_COOKIES}">
+        <a href="{switch_on_index.switch_delete_cookies.U_DELETE_COOKIES}" rel="nofollow">
+            <i class="material-symbols-outlined">delete_sweep</i>
+        </a>
+    </li>
+    <!-- END switch_delete_cookies -->
+</ul>
+<!-- END switch_on_index -->
+<style>
+/* ===== متغيرات الألوان ===== */
+:root {
+    --msr-blue: #2563EB;
+    --msr-blue-dark: #1D4ED8;
+    --msr-cyan: #0EA5E9;
+    --msr-violet: #8B5CF6;
+    --msr-violet-dark: #6D28D9;
+    --rank-default-gradient: #FFFFFF;
+    --rank-default-border: #E2E8F0;
+    --rank-default-glow: transparent;
+    --soft-primary: #2563EB;
+    --soft-primary-light: #1D4ED8;
+    --soft-secondary: #0EA5E9;
+    --soft-accent: #8B5CF6;
+    --soft-bg: #F1F5F9;
+    --soft-card-bg: #FFFFFF;
+    --soft-text-main: #1E293B;
+    --soft-text-light: #475569;
+    --soft-border: #E2E8F0;
+    --soft-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    --soft-radius: 16px;
+    --text-primary: #1E293B;
+    --text-gradient: #475569;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    --dark-border: #E2E8F0;
+}
+/* =========================================
+   ★ شريط الأدوات ★
+   ========================================= */
+.action-bar-top,
+.action-bar-bottom {
+    list-style: none; 
+    padding: 0; 
+    margin: 0 0 25px 10px;
+    display: flex; 
+    flex-wrap: wrap; 
+    align-items: center; 
+    gap: 8px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+.action-bar-bottom { margin-top: 30px; }
+.msr-icon-btn {
+    position: relative;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1px solid var(--dark-border);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.msr-icon-btn:hover {
+    border-color: var(--msr-blue);
+    background: var(--msr-blue);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    transform: translateY(-3px) scale(1.05);
+}
+.msr-icon-btn-danger:hover {
+    border-color: #EF4444 !important;
+    background: #EF4444 !important;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3) !important;
+}
+.msr-icon-btn a {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; height: 100%; text-decoration: none;
+}
+.msr-icon-btn .material-symbols-outlined {
+    font-size: 20px; color: var(--msr-blue); transition: color 0.3s ease;
+}
+.msr-icon-btn:hover .material-symbols-outlined { color: #FFFFFF; }
+.msr-icon-btn::after {
+    content: attr(data-text);
+    position: absolute; top: calc(100% + 10px); left: 50%;
+    transform: translateX(-50%) translateY(-5px);
+    background: #1E293B; color: #ffffff;
+    padding: 6px 14px; border-radius: 8px;
+    font-size: 13px; font-weight: 600; font-family: 'Cairo', sans-serif;
+    white-space: nowrap; opacity: 0; visibility: hidden;
+    transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    pointer-events: none; z-index: 99; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.msr-icon-btn::before {
+    content: '';
+    position: absolute; top: calc(100% + 4px); left: 50%;
+    transform: translateX(-50%) translateY(-5px);
+    border-width: 5px 6px 0 6px; border-style: solid;
+    border-color: #1E293B transparent transparent transparent;
+    opacity: 0; visibility: hidden;
+    transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    pointer-events: none; z-index: 99;
+}
+.msr-icon-btn:hover::after { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+.msr-icon-btn:hover::before { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+/* ===== عنوان الفئة ===== */
+.msr-category-box { margin-bottom: 35px; }
+.msr-category-header { display: flex; align-items: center; justify-content: space-between; padding: 0 10px 15px 10px; }
+.msr-category-title { display: flex; align-items: center; gap: 15px; flex: 1; }
+.msr-category-title span { font-size: 20px; font-weight: 800; color: var(--text-primary); white-space: nowrap; }
+.msr-title-line { flex-grow: 1; height: 2px; background: var(--dark-border); border-radius: 50px; }
+.msr-category-toggle { width: 32px; height: 32px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border-radius: 8px; transition: 0.3s; }
+.msr-category-toggle:hover { background: rgba(37, 99, 235, 0.1); }
+.toggle-icon-a, .toggle-icon-b { width: 16px; height: 2.5px; background: var(--text-muted); border-radius: 2px; transition: all 0.3s ease; }
+.msr-category-box.category-hidden .toggle-icon-a { transform: rotate(90deg); background: var(--msr-blue); }
+.msr-category-box.category-hidden .toggle-icon-b { opacity: 0; transform: translateX(-10px); }
+.msr-category-box.category-hidden .forum-container { display: none; }
+/* ===== حاوية البطاقات ===== */
+.forum-container { display: flex; flex-wrap: wrap; gap: 25px; max-width: 1280px; margin: 0 auto; }
+/* ===== البطاقة الافتراضية ===== */
+.forum-card {
+    background: var(--soft-card-bg);
+    border-radius: var(--soft-radius);
+    overflow: hidden;
+    border: 1px solid var(--rank-default-border);
+    box-shadow: var(--soft-shadow);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: calc(33.333% - 17px); /* الافتراضي: 3 بطاقات في الصف */
+    flex: 0 0 auto;
+    position: relative;
+}
+.forum-card:hover { 
+    transform: translateY(-8px) scale(1.02);
+    border-color: #CBD5E1;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+/* =========================================
+   ★ الترتيب الجديد للشبكة (1 كلاسيكي، 2 نص-نص، 3 أثلاث) ★
+   ========================================= */
+/* الصف الأول: منتدى واحد (كلاسيكي - الصورة بجانب النص) */
+.forum-card:nth-child(6n+1) {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 300px 1fr; /* عرض الصورة 300px والباقي للنص */
+    grid-template-rows: auto auto 1fr;
+}
+.forum-card:nth-child(6n+1) .forum-image-link {
+    grid-row: 1 / -1; /* الصورة تمتد بكامل ارتفاع البطاقة */
+}
+.forum-card:nth-child(6n+1) .forum-image-container,
+.forum-card:nth-child(6n+1) .RMAVATAR,
+.forum-card:nth-child(6n+1) .avatarcp,
+.forum-card:nth-child(6n+1) .avatarcp img {
+    width: 100%;
+    height: 100%;
+    min-height: 240px; /* ارتفاع أدنى للصورة في الوضع الكلاسيكي */
+}
+.forum-card:nth-child(6n+1) .forum-name {
+    border-bottom: 1px solid var(--dark-border);
+    justify-content: flex-start; /* محاذاة الإحصائيات لليمين */
+}
+.forum-card:nth-child(6n+1) .forum-title-section {
+    padding-top: 15px;
+}
+.forum-card:nth-child(6n+1) .card-body p {
+    max-height: 3.8em; /* تعديل ارتفاع الوصف */
+}
+/* الصف الثاني: منتديان (كل واحد 50%) */
+.forum-card:nth-child(6n+2),
+.forum-card:nth-child(6n+3) {
+    width: calc(50% - 13px);
+}
+/* الصف الثالث وباقي البطاقات تحافظ على العرض 33.333% (الافتراضي) */
+/* ===== صورة القسم ===== */
+.forum-image-link { display: block; text-decoration: none; cursor: pointer; }
+.forum-image-container { position: relative; width: 100%; height: 180px; overflow: hidden; background: #F1F5F9; }
+.RMAVATAR { width: 100%; height: 180px; overflow: hidden; }
+.avatarcp { display: block; width: 100%; height: 180px; overflow: hidden; font-size: 0; line-height: 0; }
+.avatarcp img {
+    width: 100%; height: 180px; background-color: #F1F5F9; padding: 0; object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.forum-image-link:hover .avatarcp img { transform: scale(1.08) rotate(1deg); }
+/* ===== منطقة الإحصائيات ===== */
+.forum-name {
+    background: #F8FAFC; color: var(--text-secondary);
+    padding: 10px 12px; margin-bottom: 0;
+    display: flex; justify-content: center; align-items: center;
+    border-bottom: 1px solid var(--dark-border);
+}
+.stats-container { display: flex; gap: 15px; align-items: center; }
+.forum-stat-topics, .forum-stat-posts {
+    display: flex; align-items: center; gap: 6px;
+    color: var(--text-secondary); font-size: 0.85em;
+    background: #FFFFFF; padding: 4px 10px;
+    border-radius: 12px; border: 1px solid var(--dark-border); transition: 0.3s;
+}
+.forum-card:hover .forum-stat-topics,
+.forum-card:hover .forum-stat-posts { border-color: #CBD5E1; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+.forum-stat-topics i, .forum-stat-posts i { color: var(--msr-blue); font-size: 1.1em; }
+/* ===== عنوان القسم ===== */
+.forum-title-section { text-align: right; padding: 12px 15px 8px 15px; }
+.forum-title-link {
+    display: inline-block; text-decoration: none;
+    font-size: 1.2em; font-weight: 800; color: var(--text-primary); transition: color 0.3s;
+}
+.forum-title-link:hover { color: var(--msr-blue); }
+/* ===== جسم البطاقة ===== */
+.card-body {
+    display: flex; flex-direction: column; flex-grow: 1; padding: 0 15px 15px 15px;
+}
+/* ===== وصف المنتدى ===== */
+.card-body p {
+    font-size: 0.9em; color: var(--text-secondary); -webkit-text-fill-color: initial;
+    background-color: rgba(241, 245, 249, 0.5); line-height: 1.7; max-height: 4.5em;
+    overflow-y: auto; word-wrap: break-word; margin-bottom: 15px;
+    padding: 8px 12px; border-radius: 10px; border: none;
+    box-shadow: inset 4px 0 10px -4px rgba(0, 0, 0, 0.05);
+}
+.card-body p::-webkit-scrollbar { width: 4px; }
+.card-body p::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+.card-body p::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }
+.card-body p img { display: none !important; }
+/* ===== آخر مساهمة ===== */
+#lastpost {
+    background: #F8FAFC; color: var(--text-secondary);
+    font-family: 'Cairo', tahoma, sans-serif; font-size: 11px; font-weight: 500;
+    padding: 10px; border-radius: 12px; border: 1px solid var(--dark-border);
+    position: relative; display: flex; justify-content: space-between; align-items: center;
+    overflow: hidden; margin-top: auto;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+#lastpost:hover { background: #FFFFFF; border-color: #CBD5E1; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+.forum_new #lastpost { background: rgba(37, 99, 235, 0.03); border-color: rgba(37, 99, 235, 0.2); }
+.forum_new #lastpost:hover { background: rgba(37, 99, 235, 0.06); border-color: rgba(37, 99, 235, 0.3); }
+.lastpost-info { display: flex; align-items: center; flex-grow: 1; min-width: 0; gap: 10px; }
+.lastpost-avatar img {
+    border-radius: 50%; height: 36px; width: 36px; object-fit: cover; flex-shrink: 0;
+    border: 2px solid var(--dark-border); transition: border-color 0.3s;
+}
+.forum_new .lastpost-avatar img { border-color: rgba(37, 99, 235, 0.4); }
+.lastpost-details { display: flex; flex-direction: column; justify-content: center; min-width: 0; line-height: 1.4; }
+.lastpost-title {
+    font-weight: 700; color: var(--text-primary); white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis; display: block;
+    margin-bottom: 3px; text-decoration: none; transition: color 0.3s;
+}
+.lastpost-title:hover { color: var(--msr-blue); }
+.lastpost-meta { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 11px; display: flex; flex-wrap: wrap; gap: 5px; }
+a.gensmall { text-decoration: none !important; }
+.lastpost-author, .lastpost-date { display: inline-flex; align-items: center; gap: 4px; }
+.lastpost-author { color: var(--msr-cyan); font-weight: 600; }
+.lastpost-date { color: var(--text-muted); margin-right: 5px; }
+.lastpost-date a { color: var(--text-muted) !important; text-decoration: none; }
+.lastpost-date a:hover { color: var(--msr-blue) !important; }
+/* ===== زر الانتقال ===== */
+.go-to-lastpost {
+    position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
+    width: 36px; height: 36px; border-radius: 50%;
+    background: #FFFFFF; border: 1px solid var(--dark-border);
+    display: flex; justify-content: center; align-items: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 2; text-decoration: none; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.go-to-lastpost i { color: var(--text-primary); font-size: 20px; transition: color 0.3s; }
+.go-to-lastpost:hover {
+    background: var(--msr-blue); border-color: var(--msr-blue);
+    transform: translateY(-50%) scale(1.15); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+.go-to-lastpost:hover i { color: #FFFFFF; }
+.forum_new .go-to-lastpost { background: rgba(37, 99, 235, 0.1); border-color: rgba(37, 99, 235, 0.3); }
+.forum_new .go-to-lastpost i { color: var(--msr-blue); }
+.forum_new .go-to-lastpost:hover { background: var(--msr-blue); border-color: var(--msr-blue); }
+.forum_new .go-to-lastpost:hover i { color: #fff; }
+/* ===== إصلاح الحقول ===== */
+.input-subtle:hover, .input-subtle:focus, .inputbox:hover, .inputbox:focus, .gensmall:hover, .gensmall:focus, select:hover, select:focus { border-color: transparent; }
+.input-subtle, .inputbox, .gensmall, select {
+    border-bottom: 1px solid transparent; border-radius: 0 !important; display: block;
+    width: 100%; clear: both; background-color: transparent; margin-bottom: 4px;
+    max-width: 300px; font-size: 13px; color: var(--text-secondary);
+}
+/* ===== تنسيق المنتديات الداخلية (الأقسام الفرعية) ===== */
+.sub-forums-chips {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--dark-border); /* فاصل ناعم بين الوصف والأقسام الفرعية */
+    display: flex;
+    flex-wrap: wrap; /* السماح بالتفاف البطاقات إذا زاد عددها للحفاظ على التناسق */
+    gap: 8px; /* مسافة موحدة بين كل بطاقة وأخرى */
+    align-items: center;
+    font-size: 0; /* لإخفاء الفواصل (،) النصية التي يضعها النظام تلقائياً */
+}
+/* تنسيق كلمة "مواضيع" أو أي نص قبل الروابط إن وجد */
+.sub-forums-chips b {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-left: 4px;
+}
+/* تنسيق روابط المنتديات الداخلية على شكل بطاقات */
+.sub-forums-chips a, 
+.sub-forums-chips .gensmall a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11.5px !important; /* استعادة حجم الخط */
+    font-weight: 600;
+    color: var(--msr-blue);
+    background: rgba(37, 99, 235, 0.06); /* خلفية زرقاء فاتحة جداً */
+    border: 1px solid rgba(37, 99, 235, 0.2); /* إطار أزرق شفاف */
+    border-radius: 20px; /* حواف دائرية أنيقة (شكل الكبسولة) */
+    padding: 4px 12px;
+    text-decoration: none;
+    white-space: nowrap; /* منع كسر النص داخل البطاقة */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    line-height: 1.4;
+}
+/* تأثير عند تمرير الماوس */
+.sub-forums-chips a:hover, 
+.sub-forums-chips .gensmall a:hover {
+    background: var(--msr-blue);
+    color: #FFFFFF;
+    border-color: var(--msr-blue);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+/* ===== تنسيق شريط التمرير لمعرض الصور المشاركة مؤخراً ===== */
+.container-imgs-list::-webkit-scrollbar {
+    width: 6px;
+}
+.container-imgs-list::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: 10px;
+}
+.container-imgs-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+/* ===== استجابة الشاشات ===== */
+@media (max-width: 1024px) {
+    /* جميع البطاقات تصبح بعرض 50% ماعدا الكلاسيكية */
+    .forum-card { width: calc(50% - 13px) !important; }
+    .forum-card:nth-child(6n+1) {
+        width: 100% !important;
+        display: flex; /* العودة للعمود في الشاشات المتوسطة */
+        flex-direction: column;
+    }
+    .forum-card:nth-child(6n+1) .forum-image-container,
+    .forum-card:nth-child(6n+1) .RMAVATAR,
+    .forum-card:nth-child(6n+1) .avatarcp,
+    .forum-card:nth-child(6n+1) .avatarcp img {
+        height: 180px;
+        min-height: unset;
+    }
+    .forum-container { gap: 20px; }
+}
+@media (max-width: 600px) {
+    /* جميع البطاقات تصبح بعرض 100% */
+    .forum-card { width: 100% !important; }
+    .forum-card:nth-child(6n+1) { display: flex; flex-direction: column; }
+    .forum-card:nth-child(6n+1) .forum-image-container,
+    .forum-card:nth-child(6n+1) .RMAVATAR,
+    .forum-card:nth-child(6n+1) .avatarcp,
+    .forum-card:nth-child(6n+1) .avatarcp img {
+        height: 180px;
+        min-height: unset;
+    }
+    .forum-container { gap: 20px; }
+    .msr-category-header { padding: 0 5px 10px 5px; }
+    .msr-category-title span { font-size: 16px; }
+    .action-bar-top, .action-bar-bottom { margin-bottom: 15px; }
+    .sub-forums-chips {
+        gap: 6px; /* تقليل المسافة قليلاً في الجوال */
+    }
+    .sub-forums-chips a, .sub-forums-chips .gensmall a {
+        font-size: 11px !important;
+        padding: 3px 10px;
+    }
+}
+</style>
+<script type="text/javascript">
+    //<![CDATA[
+    $(document).ready(function () {
+        var curid = '{CUR_ID}';
+        var collapsed = [];
+        if (readCookie('collapsed') != null && readCookie('collapsed') != '') {
+            collapsed = readCookie('collapsed').split(',');
+        }
+        $(document).on('click', '.msr-category-toggle', function () {
+            $(this).parents('.msr-category-box').toggleClass('category-hidden');
+            var boxIndex = $(this).parents('.msr-category-box').data('cindex');
+            if (readCookie('collapsed') != null && readCookie('collapsed') != '') {
+                collapsed = readCookie('collapsed').split(',');
+            }
+            if (!$(this).parents('.msr-category-box').hasClass('category-hidden')) {
+                removeFromArray(curid + '.' + boxIndex, collapsed);
+                createCookie('collapsed', collapsed);
+            } else {
+                collapsed.push(curid + '.' + boxIndex);
+                createCookie('collapsed', collapsed);
+            }
+        });
+        $('.msr-category-box').each(function (i) {
+            $(this).data('cindex', '' + i);
+            if ($.inArray(curid + '.' + i, collapsed) > -1) {
+                $(this).addClass('category-hidden');
+            }
+        });
+    });
+    function removeFromArray(item, array) {
+        var i = array.indexOf(item);
+        if (i > -1) { array = array.splice(i, 1); }
+    }
+    function createCookie(name, value, days) {
+        var expires;
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toGMTString();
+        } else { expires = ""; }
+        document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
+    }
+    function readCookie(name) {
+        var nameEQ = encodeURIComponent(name) + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+        }
+        return null;
+    }
+    //]]>
+</script>
