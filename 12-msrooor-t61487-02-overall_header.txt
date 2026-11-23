@@ -1,0 +1,1192 @@
+
+<!DOCTYPE HTML>
+<html lang="{L_LANG_HTML}">
+<head>
+    <meta charset="{S_CONTENT_ENCODING}" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset={S_CONTENT_ENCODING}" />
+
+    <!-- BEGIN switch_canonical_url -->
+    <link rel="canonical" href="{switch_canonical_url.CANONICAL_URL}" />
+    <!-- END switch_canonical_url -->
+
+    {META_FAVICO}
+    {META}
+    {META_FB_LIKE}
+
+    <title>{SITENAME_TITLE}{PAGE_TITLE}</title>
+
+    {T_HEAD_STYLESHEET}
+    {CSS}
+
+    <!-- Changed Theme Color to Blue -->
+    <meta name="theme-color" content="#2563EB" />
+
+    <link rel="search" type="application/opensearchdescription+xml" href="/improvedsearch.xml" title="{SITENAME}" />
+    <link rel="search" type="application/opensearchdescription+xml" href="{URL_BOARD_DIRECTORY}/search/improvedsearch.xml" title="{SEARCH_FORUMS}" />
+
+    <script src="{JQUERY_PATH}" type="text/javascript"></script>
+    <!-- BEGIN switch_recent_jquery -->
+    <script src="{JS_DIR}jquery1.9/jquery-migrate-1.4.1.js" type="text/javascript"></script>
+    <script src="{JS_DIR}browser/v1.0/jquery.browser.min.js" type="text/javascript"></script>
+    <script src="{JS_DIR}support/jquery.support.js" type="text/javascript"></script>
+    <!-- END switch_recent_jquery -->
+
+    <script src="{JS_DIR}{L_LANG}.js" type="text/javascript"></script>
+
+    <!-- BEGIN switch_fb_login -->
+    <script src="{switch_fb_login.JS_FB_LOGIN}" type="text/javascript"></script>
+    <!-- END switch_fb_login -->
+
+    <!-- BEGIN switch_ticker -->
+    <link type="text/css" rel="stylesheet" href="{JS_DIR}jquery/ticker/ticker.css" />
+    <script src="{JS_DIR}jquery/ticker/ticker.js" type="text/javascript"></script>
+    <!-- END switch_ticker -->
+    
+    <script type="text/javascript">
+     $(window).on('load', function() {
+        var img = $('#header-user img');
+        if (img.length) {
+            $('.msr-compact-avatar').empty().append(img.clone());
+        } else {
+            console.log('الصورة غير موجودة');
+        }
+    });
+    </script>
+
+    <!-- BEGIN switch_ticker -->
+    <script type="text/javascript">
+        //<![CDATA[
+        $(document).ready(function () {
+            Ticker.start({
+                height : {switch_ticker.HEIGHT},
+                spacing : {switch_ticker.SPACING},
+                speed : {switch_ticker.SPEED},
+                direction : '{switch_ticker.DIRECTION}',
+                pause : {switch_ticker.STOP_TIME},
+                max_height: {switch_ticker.HEIGHT},
+            });
+        });
+        //]]>
+    </script>
+    <!-- END switch_ticker -->
+
+    <script type="text/javascript">
+        $(document).scroll(function() {
+            var y = $(this).scrollTop();
+            if (y > 164) {
+                if($('.btn-fixed').find('.btn-fixed-txt').length !== 0){
+                    $('.btn-fixed').addClass('btn-scrolled');
+                }
+            } else {
+                if($('.btn-fixed').find('.btn-fixed-txt').length !== 0) {
+                    $('.btn-fixed').removeClass('btn-scrolled');
+                }
+            }
+        });
+    </script>
+    <!-- BEGIN switch_report_popup -->
+    <script type="text/javascript">
+        //<![CDATA[
+        $(document).ready(function () {
+            report = window.open('{switch_report_popup.U_REPORT_POPUP}', '_phpbbreport', 'HEIGHT={switch_report_popup.S_HEIGHT},resizable=yes,scrollbars=no,WIDTH={switch_report_popup.S_WIDTH}');
+            if (report != null) {
+                report.focus();
+            }
+        });//]]>
+    </script>
+    <!-- END switch_report_popup -->
+    <!-- BEGIN switch_enable_pm_popup -->
+    <script type="text/javascript">
+        //<![CDATA[
+        $(document).ready(function () {
+            pm = window.open('{U_PRIVATEMSGS_POPUP}', '_faprivmsg', 'HEIGHT=225,resizable=yes,WIDTH=400');
+            if (pm != null) {
+                pm.focus();
+            }
+        });
+        //]]>
+    </script>
+    <!-- END switch_enable_pm_popup -->
+    <!-- BEGIN switch_login_popup -->
+    <script type="text/javascript">
+        //<![CDATA[
+    var logInPopUpLeft, logInPopUpTop, logInPopUpWidth = {LOGIN_POPUP_WIDTH},
+    logInPopUpHeight = {LOGIN_POPUP_HEIGHT}, logInBackgroundResize = true, logInBackgroundClass = false;
+
+    $(document).ready(function () {
+        $(window).resize(function () {
+            var windowWidth = document.documentElement.clientWidth;
+            var popupWidth = $("#login_popup").width();
+            var mypopup = $("#login_popup");
+
+            $("#login_popup").css({
+                "left": windowWidth / 2 - popupWidth / 2
+            });
+        });
+    });
+        //]]>
+    </script>
+    <!-- END switch_login_popup -->
+
+    {RICH_SNIPPET_GOOGLE}
+    {HOSTING_JS}
+
+    <!-- BEGIN google_analytics_code -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={G_ANALYTICS_ID}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{G_ANALYTICS_ID}', {'anonymize_ip': true, 'store_gac': false, 'cookie_expires': 13 * 30 * 24 * 60 * 60});
+        <!-- BEGIN google_analytics_code_bis -->
+        gtag('config', '{G_ANALYTICS_ID_BIS}', {'anonymize_ip': true, 'store_gac': false, 'cookie_expires': 13 * 30 * 24 * 60 * 60});
+        <!-- END google_analytics_code_bis -->
+    </script>
+    <!-- END google_analytics_code -->
+
+    <!-- Icons & Fonts (Icons kept, Text fonts removed) -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+
+        /* ===== تعديل خط عنوان المنتدى في الهيدر ===== */
+        #logo-text {
+            /* تم حذف max-width لمنع تصغير العنوان */
+            /* تم حذف text-shadow لإزالة الظل */
+            font-weight: 900 !important;
+        }
+
+        .forum-description img {
+            max-width: calc(100% - 15px);
+        }
+
+        /* ===== VARIABLES - Light Blue/Purple Theme ===== */
+        :root {
+            --msr-dark: #F8FAFC;
+            --msr-dark-alt: #FFFFFF;
+            --msr-dark-card: #FFFFFF;
+            --msr-dark-hover: #F1F5F9;
+            --msr-dark-border: #E2E8F0;
+            --msr-text-main: #1E293B;
+            --msr-text-sub: #475569;
+            --msr-text-muted: #94A3B8;
+            --msr-text-primary: var(--msr-text-main);
+            --msr-text-secondary: var(--msr-text-sub);
+
+            --msr-red: #2563EB; /* Blue */
+            --msr-red-dark: #1D4ED8; /* Darker Blue */
+            --msr-red-dim: rgba(37, 99, 235, 0.1);
+            --msr-cyan: #0EA5E9; /* Sky Blue */
+            --msr-cyan-dim: rgba(14, 165, 233, 0.15);
+            --msr-pink: #8B5CF6; /* Violet */
+            --msr-pink-dim: rgba(139, 92, 246, 0.15);
+
+            --glass-gradient: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(241, 245, 249, 0.9));
+            --shadow-card: 0 4px 15px rgba(0,0,0,0.06);
+            --glow-red: 0 0 15px rgba(37, 99, 235, 0.2);
+            --glow-cyan: 0 0 15px rgba(14, 165, 233, 0.2);
+            --glow-pink: 0 0 15px rgba(139, 92, 246, 0.2);
+
+            --soft-primary: var(--msr-red);
+            --soft-primary-light: var(--msr-red-dark);
+            --soft-secondary: var(--msr-cyan);
+            --soft-accent: var(--msr-pink);
+            --soft-bg: var(--msr-dark);
+            --soft-card-bg: var(--msr-dark-card);
+            --soft-header-bg: var(--msr-dark-alt);
+            --soft-text-main: var(--msr-text-main);
+            --soft-text-light: var(--msr-text-sub);
+            --soft-border: var(--msr-dark-border);
+            --soft-shadow: var(--shadow-card);
+            --soft-radius: 16px;
+            --msr-gold: var(--msr-cyan);
+            --msr-gold-dark: var(--msr-pink);
+        }
+
+        * { box-sizing: border-box; outline: none; }
+
+        /* ===== 1. توحيد الخلفية الأساسية وإخفاء شريط التمرير العام ===== */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            background-color: #F1F5F9 !important; 
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        body::-webkit-scrollbar { display: none; }
+
+        #wrap {
+            background-color: transparent !important;
+            background-image: none !important;
+        }
+
+        /* ===== TOP NAVBAR & MENUS STYLES ===== */
+        header {
+            background-color: #FFFFFF !important;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.06) !important;
+            border-bottom: 1px solid #E2E8F0 !important;
+        }
+
+        #logo-text { color: #2563EB !important; }
+        #main-menu-btn i { color: #2563EB !important; }
+        #header-notif i { color: #2563EB !important; }
+
+        #header-user {
+            display: inline-flex !important; 
+            align-items: center !important; 
+            gap: 8px !important;
+            color: #2563EB !important;
+            font-weight: 800 !important;
+            max-width: 200px; /* Prevent breaking header */
+        }
+
+        #header-user span, 
+        #header-user b, 
+        #header-user a,
+        #header-user strong {
+            color: #2563EB !important;
+            font-weight: 800 !important;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        #header-user img {
+            border: 2px solid #2563EB !important; border-radius: 50% !important;
+            object-fit: cover !important; width: 35px !important; height: 35px !important;
+            box-shadow: 0 0 8px rgba(37, 99, 235, 0.3);
+            flex-shrink: 0;
+        }
+
+        header .button {
+            background: #2563EB !important; color: #fff !important;
+            border-radius: 12px !important; font-weight: 700 !important;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3) !important;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; border: none !important;
+        }
+        header .button:hover {
+            background: #1D4ED8 !important; transform: translateY(-3px) !important;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4) !important;
+        }
+
+        #main-menu { background: #FFFFFF !important; border-left: 1px solid #E2E8F0 !important; box-shadow: -5px 0 15px rgba(0,0,0,0.05) !important; }
+        .main-menu-headline { background: #2563EB !important; color: #fff !important; font-weight: 700 !important; }
+        #main-menu a { color: #1E293B !important; border-bottom: 1px solid #F1F5F9 !important; transition: all 0.3s ease !important; }
+        #main-menu a:hover { background: rgba(37, 99, 235, 0.08) !important; color: #2563EB !important; }
+        #main-menu a i { color: #0EA5E9 !important; }
+
+        #main-user-menu { background: #FFFFFF !important; border: 1px solid #E2E8F0 !important; border-radius: 16px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important; overflow: hidden !important; }
+        #main-user-menu a { color: #1E293B !important; border-bottom: 1px solid #F1F5F9 !important; transition: all 0.3s ease !important; }
+        #main-user-menu a:hover { background: rgba(37, 99, 235, 0.08) !important; color: #2563EB !important; }
+
+        #notif-menu { background: #FFFFFF !important; border: 1px solid #E2E8F0 !important; border-radius: 16px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important; }
+        #notif-menu .main-menu-headline { background: #F8FAFC !important; color: #2563EB !important; border-bottom: 1px solid #E2E8F0 !important; }
+        #notif_list li { background: #FFFFFF !important; border-bottom: 1px solid #F8FAFC !important; }
+        #notif_list li:hover { background: rgba(37, 99, 235, 0.05) !important; }
+        #notif_list li a { color: #1E293B !important; }
+        #notif-view-all a { color: #2563EB !important; font-weight: 700 !important; }
+
+        #live_notif .notif { background: #FFFFFF !important; border: 1px solid #E2E8F0 !important; border-radius: 12px !important; box-shadow: 0 4px 15px rgba(0,0,0,0.08) !important; color: #1E293B !important; backdrop-filter: blur(5px); }
+
+        .block-subtle { background: #FFFFFF !important; border: 1px solid #E2E8F0 !important; border-radius: 16px !important; box-shadow: 0 20px 60px rgba(0,0,0,0.08) !important; }
+        .block-subtle .headline { background: #2563EB !important; color: #fff !important; border-radius: 16px 16px 0 0 !important; }
+        .block-subtle .headline button { color: #fff !important; }
+        .block-subtle .btn, .block-subtle .button1 { background: #2563EB !important; color: #fff !important; border: none !important; border-radius: 12px !important; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3); }
+        .block-subtle .btn:hover, .block-subtle .button1:hover { background: #1D4ED8 !important; transform: translateY(-3px) !important; box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4) !important; }
+
+        /* ===== MEMBER CARD INSIDE HERO ===== */
+        .msr-compact-user-card {
+            display: flex; align-items: center; gap: 15px;
+            background: rgba(255, 255, 255, 0.8); padding: 15px 20px;
+            border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border: 1px solid #E2E8F0; direction: rtl;
+            animation: fadeInCard 0.8s ease-out; backdrop-filter: blur(10px);
+        }
+        .msr-compact-avatar img {
+            width: 55px; height: 55px; border-radius: 50%;
+            border: 3px solid #2563EB; box-shadow: 0 0 10px rgba(37, 99, 235, 0.2);
+            object-fit: cover; flex-shrink: 0;
+        }
+        .msr-compact-info { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+        .msr-compact-greeting { font-size: 13px; color: #475569; font-weight: 600; display: flex; align-items: center; gap: 5px; }
+        .msr-compact-greeting i { font-size: 18px; color: #2563EB; }
+        .msr-compact-name { font-size: 0; font-weight: 800; line-height: 1.2; color: #2563EB !important; text-shadow: none !important; }
+        .msr-compact-name strong { font-size: 18px; color: #1D4ED8 !important; }
+        .msr-compact-name b, .msr-compact-name a { color: #1D4ED8 !important; font-weight: 800 !important; text-decoration: none !important; font-size: 18px !important; }
+        .msr-compact-welcome-msg { font-size: 12px; color: #64748B; font-weight: 500; display: flex; align-items: center; gap: 6px; margin-top: 2px; line-height: 1.4; }
+        .msr-compact-welcome-msg i { color: #0EA5E9; }
+        .msr-compact-actions { display: flex; gap: 10px; flex-shrink: 0; }
+        .msr-compact-btn { padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: 700; text-decoration: none !important; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+        .msr-compact-btn i { font-size: 16px; transition: all 0.3s ease; }
+        .msr-cbtn-primary { background: #2563EB; color: #fff !important; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3); }
+        .msr-cbtn-primary:hover { background: #1D4ED8; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4); }
+        .msr-cbtn-primary:hover i { transform: rotate(-15deg) scale(1.1); }
+        .msr-cbtn-outline { border: 2px solid #2563EB; color: #2563EB !important; background: transparent; }
+        .msr-cbtn-outline:hover { background: rgba(37, 99, 235, 0.1); transform: translateY(-3px); }
+        .msr-cbtn-outline:hover i { transform: rotate(-15deg) scale(1.1); }
+        @keyframes fadeInCard { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ===== HERO & REST ===== */
+        .msr-container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+        
+        .msr-hero {
+            padding: 170px 0 70px;
+            position: relative;
+            background-color: #F8FAFC;
+            background-image: linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%);
+            color: #1E293B;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .msr-hero:before {
+            content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+            width: 900px; height: 900px; background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 70%); pointer-events: none;
+        }
+        
+        .msr-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: stretch; position: relative; z-index: 1; }
+        
+        .msr-hero-content { animation: fadeInRight 1s ease; display: flex; flex-direction: column; }
+        
+        .msr-hero-badge { display: inline-block; background: rgba(37, 99, 235, 0.1); color: #2563EB; padding: 8px 20px; border-radius: 12px; font-size: 14px; font-weight: 600; margin-bottom: 20px; border: 1px solid rgba(37, 99, 235, 0.2); box-shadow: 0 2px 5px rgba(37, 99, 235, 0.1); flex-shrink: 0; }
+        .msr-hero-badge i { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
+
+        .msr-hero-title { font-size: 52px; line-height: 1.2; margin-bottom: 20px; color: #0F172A; font-weight: 900; text-shadow: none; flex-shrink: 0; }
+        
+        .msr-highlight { 
+            color: #000000 !important;
+            font-weight: 900 !important;
+            font-size: 40px !important;
+            text-shadow: none; 
+            display: inline-block; 
+            text-decoration: none !important;
+            border-bottom: none !important;
+            background: none !important;
+        }
+        .msr-highlight::after { display: none !important; content: none !important; }
+
+        .colored-part-1, .colored-part-2, #logo-text, #logo-link, #msr-site-name {
+            text-decoration: none !important;
+            border-bottom: none !important;
+            background: none !important;
+        }
+        .colored-part-1::after, .colored-part-2::after, #logo-text::after, #msr-site-name::after {
+            content: none !important;
+            display: none !important;
+        }
+
+        .msr-hero-desc { font-size: 18px; color: #475569; line-height: 1.8; margin-bottom: 35px; max-width: 90%; flex-shrink: 0; }
+
+        .msr-guest-actions { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; width: 100%; flex-shrink: 0; }
+        .msr-btn-login { flex: 1; min-width: 140px; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 20px; border-radius: 16px; font-size: 15px; font-weight: 800; text-decoration: none; color: #ffffff !important; background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); border: 1px solid rgba(37, 99, 235, 0.3); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); transition: all 0.3s ease; }
+        .msr-btn-login:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5); background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 100%); }
+        .msr-btn-register { flex: 1; min-width: 140px; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 20px; border-radius: 16px; font-size: 15px; font-weight: 800; text-decoration: none; color: #fff; background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%); box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4); border: 1px solid rgba(139, 92, 246, 0.3); transition: all 0.3s ease; }
+        .msr-btn-register:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5); }
+
+        .msr-hero-description { font-size: 14px; margin-top: 20px; margin-bottom: 40px; border-right: 3px solid #CBD5E1; padding-right: 15px; color: #475569; line-height: 1.6; flex-shrink: 0; }
+        .msr-hero-description strong { color: #2563EB; }
+
+        .msr-quick-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 0px; flex-shrink: 0; }
+        .msr-quick-card { display: flex; flex-direction: row; align-items: center; gap: 15px; background: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 12px; text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid #E2E8F0; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align: right; position: relative; overflow: hidden; backdrop-filter: blur(5px); }
+        .msr-quick-card:hover { transform: translateY(-3px) scale(1.02); background: #FFFFFF; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border-color: #CBD5E1; }
+        
+        .msr-quick-card:nth-child(1):hover { border-color: #2563EB; box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15); }
+        .msr-quick-card:nth-child(1):hover .msr-card-icon { background: #2563EB; }
+        .msr-quick-card:nth-child(1):hover .msr-card-icon i { color: #FFFFFF !important; }
+        .msr-quick-card:nth-child(1):hover .msr-card-title { color: #2563EB; }
+        
+        .msr-quick-card:nth-child(2):hover { border-color: #0EA5E9; box-shadow: 0 8px 25px rgba(14, 165, 233, 0.15); }
+        .msr-quick-card:nth-child(2):hover .msr-card-icon { background: #0EA5E9; }
+        .msr-quick-card:nth-child(2):hover .msr-card-icon i { color: #FFFFFF !important; }
+        .msr-quick-card:nth-child(2):hover .msr-card-title { color: #0EA5E9; }
+        
+        .msr-card-icon { 
+            width: 50px; height: 50px; border-radius: 12px; background: #EFF6FF; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 24px; transition: all 0.3s; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+        }
+        .msr-card-icon i {
+            color: #2563EB !important; 
+        }
+        
+        .msr-card-text { display: flex; flex-direction: column; gap: 4px; }
+        .msr-card-title { font-size: 16px; font-weight: 700; color: #1E293B; transition: color 0.3s; }
+        .msr-card-sub { font-size: 13px; color: #94A3B8; }
+
+        /* الحاوية اليمنى: نجعلها مرجع للحاوية المطلقة */
+        .msr-hero-visual { 
+            animation: fadeInLeft 1s ease; 
+            position: relative; 
+        }
+        
+        /* الحاوية الداخلية السحرية: تأخذ ارتفاع العمود الأيسر بدقة ولا تتمدد أبداً */
+        .msr-visual-inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .activity-header-wrapper { background: #FFFFFF; color: #1E293B; font-weight: 700; margin-bottom: 0; display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; border: 1px solid #E2E8F0; border-radius: 16px 16px 0 0; font-size: 14px; backdrop-filter: blur(5px); box-shadow: 0 2px 8px rgba(0,0,0,0.04); flex-shrink: 0; }
+        
+        /* صندوق الأنشطة: يأخذ المساحة المتبقية ويتمرر داخلياً */
+        .page-discover { 
+            background: #FFFFFF; 
+            border-radius: 0 0 16px 16px; 
+            padding: 15px; 
+            flex: 1; 
+            overflow-y: auto; 
+            border: 1px solid #E2E8F0; 
+            border-top: none; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06); 
+            scroll-behavior: smooth;
+            min-height: 0;
+        }
+        .page-discover::-webkit-scrollbar { width: 6px; }
+        .page-discover::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
+        .page-discover::-webkit-scrollbar-thumb:hover { background: #2563EB; }
+        .page-discover::-webkit-scrollbar-track { background: #F1F5F9; border-radius: 10px; }
+
+        /* ===== حصر أكواد النشاطات لتعمل داخل صندوق الهيدر فقط ===== */
+        .page-discover .custom-item { display: flex; align-items: flex-start; background: #F8FAFC; padding: 15px; border-radius: 12px; margin-bottom: 12px; border: 1px solid #E2E8F0; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.03); backdrop-filter: blur(5px); }
+        .page-discover .custom-item:hover { border-color: #CBD5E1; background: #FFFFFF; transform: translateX(-3px) scale(1.01); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.08); }
+
+        .page-discover .avatar-wrapper-activity { margin-left: 15px; position: relative; flex-shrink: 0; }
+        .page-discover .avatar-activity { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #E2E8F0; object-fit: cover; background: #F1F5F9; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .page-discover .today-badge { position: absolute !important; top: 8px !important; right: 8px !important; background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%) !important; color: #ffffff !important; border-radius: 12px !important; padding: 2px 8px !important; font-size: 9px !important; font-weight: 800 !important; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4) !important; border: none !important; z-index: 10; margin: 0 !important; text-transform: uppercase; pointer-events: none; }
+        
+        .page-discover .activity-type-badge { 
+            position: absolute;
+            bottom: -3px;
+            right: -3px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid #FFFFFF !important;
+            display: flex !important;
+            align-items: center;
+            justify-content: center,
+            color: #fff !important;
+            font-size: 10px !important;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            z-index: 5;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .page-discover .custom-item .activity-type-badge i {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px !important;
+            color: #fff !important;
+        }
+
+        .page-discover .custom-item:hover .activity-type-badge { 
+            transform: scale(1.2); 
+        }
+        
+        .page-discover .details { flex: 1; text-align: right; padding-top: 2px; }
+        .page-discover .desc { font-size: 13px; color: #64748B; margin-bottom: 2px; line-height: 1.5; }
+        .page-discover .title { font-size: 15px; font-weight: 700; color: #1E293B; display: block; margin-bottom: 4px; transition: color 0.2s; }
+        .page-discover .title:hover { color: #2563EB; }
+        .page-discover .meta { display: inline-flex; align-items: center; font-size: 11px; color: #94A3B8; margin-top: 4px; }
+        .page-discover .date { font-size: 11px; color: #94A3B8; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; opacity: 0.9; margin-right: 10px; }
+        .page-discover .date:before { content: "\f017"; font-family: "Font Awesome 6 Free"; font-weight: 900; color: #2563EB; font-size: 10px; display: inline-block; }
+        .page-discover .user { color: #1E293B; font-weight: 700; text-decoration: none; }
+        .page-discover .user:hover { color: #2563EB; }
+
+        @keyframes fadeInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes highlightNew { from { background: transparent; } to { background: transparent; } }
+        @keyframes highlightDelete { from { opacity: 1; } to { opacity: 0; } }
+        .new-activity-blink, .delete-activity-blink { animation: none; }
+
+        .msr-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #FFFFFF; border: 1px solid #E2E8F0; color: #1E293B; padding: 16px 28px; border-radius: 16px; font-size: 15px; font-weight: 500; z-index: 3000; opacity: 0; transition: all 0.4s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px; backdrop-filter: blur(10px); }
+        #header-banner { display: none !important; }
+        .msr-toast.msr-show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .msr-toast i { color: #2563EB; }
+
+        /* ===== 2. تنسيق عنصر أحدث الزوار ليعوم فوق الهايدر بتأثير زجاجي ===== */
+        /* تم تعديل السطر التالي لاستثناء شريط الإعلانات من overflow: hidden */
+        #wrap .module:not(#fa_ticker_block .module), #wrap .panel, #wrap .block, #wrap [id^="block"] {
+            position: relative !important;
+            z-index: 5 !important;
+            margin-bottom: 30px !important; 
+            
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 16px !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08) !important;
+            color: #1E293B !important;
+            overflow: hidden !important;
+        }
+
+        #wrap .module .h3, #wrap .module .headline, #wrap .block .headline, #wrap [id^="block"] .h3 {
+            background: #2563EB !important; 
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            padding: 10px 15px !important;
+            border-radius: 16px 16px 0 0 !important;
+            border: none !important;
+        }
+
+        /* ============================================
+           ★ تصميم زر كرتون زمان للقائمة الجانبية - Light Blue Style ★
+           ============================================ */
+        .cartoon-btn {
+            display: inline-flex; align-items: center; background-color: rgba(37, 99, 235, 0.08);
+            color: #1E293B; padding: 12px 20px; border: 2px solid var(--msr-red);
+            border-radius: 50px; text-decoration: none; font-weight: bold; margin: 15px auto;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); font-size: 16px;
+            position: relative; overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); width: 90%; justify-content: center;
+        }
+        
+        .cartoon-btn:hover {
+            background-color: var(--msr-red); transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4); border-color: var(--msr-red);
+        }
+        
+        .cartoon-btn:active {
+            transform: translateY(0); box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+        }
+        
+        .cartoon-btn i {
+            margin-left: 8px; margin-right: 0; font-size: 20px; color: var(--msr-red);
+            transition: all 0.3s ease;
+        }
+        
+        .cartoon-btn:hover i {
+            color: #fff; transform: rotate(-15deg) scale(1.1);
+        }
+        
+        .cartoon-btn .white-text {
+            color: #1E293B; transition: color 0.3s; display: inline-block;
+        }
+        
+        .cartoon-btn .red-text {
+            color: var(--msr-red); transition: color 0.3s; display: inline-block;
+        }
+        
+        .cartoon-btn:hover .white-text,
+        .cartoon-btn:hover .red-text {
+            color: #fff;
+        }
+        
+        .cartoon-btn::after {
+            content: ""; position: absolute; top: 50%; left: 50%; width: 5px; height: 5px;
+            background: rgba(255, 255, 255, 0.5); opacity: 0; border-radius: 100%;
+            transform: scale(1, 1) translate(-50%); transform-origin: 50% 50%;
+        }
+        
+        .cartoon-btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% { transform: scale(0, 0); opacity: 1; }
+            20% { transform: scale(25, 25); opacity: 1; }
+            100% { opacity: 0; transform: scale(40, 40); }
+        }
+
+        /* ===== إصلاح شريط الإعلانات الخاصة ليتوافق مع التصميم ===== */
+        #fa_ticker_block {
+            margin: 20px auto !important;
+            max-width: 1280px;
+            padding: 0 20px;
+        }
+        
+        #fa_ticker_block .module {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 16px !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08) !important;
+            overflow: visible !important;
+            padding: 0 !important;
+        }
+        
+        #fa_ticker_block .h3, 
+        #fa_ticker_block .headline {
+            background: #2563EB !important;
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            padding: 10px 15px !important;
+            border-radius: 16px 16px 0 0 !important;
+            margin: 0 !important;
+        }
+        
+        #fa_ticker_block .inner {
+            overflow: visible !important;
+            padding: 10px 0 !important;
+        }
+        
+        #fa_ticker_container {
+            overflow: visible !important;
+        }
+        
+        #fa_ticker {
+            overflow: hidden !important;
+        }
+        
+        .fa_ticker_content {
+            display: block !important;
+        }
+        
+        .fa_ticker_content div, 
+        .fa_ticker_content a {
+            font-size: 14px !important;
+            color: #1E293B !important;
+            font-weight: 600 !important;
+            padding: 0 10px;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 991px) {
+            .msr-hero-grid { grid-template-columns: 1fr; gap: 0; align-items: stretch; }
+            .msr-hero-content { display: block !important; height: auto !important; order: 1; }
+            .msr-hero-visual { order: 2; margin-top: 35px; animation: fadeInUp 0.8s ease; position: relative; height: 450px; }
+            .msr-visual-inner { position: relative; top: auto; left: auto; right: auto; bottom: auto; height: 100%; }
+            .msr-hero { padding-top: 90px; padding-bottom: 70px; }
+            
+            /* تكبير العنوان والوصف للشاشات المتوسطة */
+            .msr-hero-title { font-size: 38px !important; line-height: 1.3; }
+            .msr-highlight { font-size: 34px !important; }
+            .msr-hero-desc { font-size: 18px !important; line-height: 1.8; max-width: 100%; margin-bottom: 25px; }
+            
+            .msr-hero-badge { font-size: 12px; padding: 6px 16px; margin-bottom: 16px; }
+            .msr-quick-cards { grid-template-columns: 1fr; gap: 14px; margin-bottom: 25px; }
+            .msr-quick-card { padding: 16px; gap: 12px; }
+            .msr-card-icon { width: 44px; height: 44px; font-size: 20px; border-radius: 12px; }
+            .msr-card-title { font-size: 15px; }
+            .msr-card-sub { font-size: 12px; }
+            .msr-guest-actions { flex-direction: column; gap: 12px; margin-bottom: 25px; }
+            .msr-hero-description { margin-top: 15px; font-size: 11px; }
+            
+            /* === MOBILE FIXES FOR USER CARD === */
+            
+            /* 1. Change Layout to Vertical Stack */
+            .msr-compact-user-card { 
+                flex-direction: column; 
+                justify-content: center; 
+                padding: 20px 15px; 
+                text-align: center;
+            }
+            
+            /* 2. Ensure Info Section Centers */
+            .msr-compact-info {
+                align-items: center;
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            /* 3. FIX: Restore Username Visibility and Size */
+            .msr-compact-name { 
+                display: block !important; /* Stop hiding it */
+                margin: 5px 0;
+            }
+            .msr-compact-name strong, 
+            .msr-compact-name b, 
+            .msr-compact-name a {
+                font-size: 16px !important; /* Readable size on mobile */
+            }
+
+            /* 4. Center Welcome Message */
+            .msr-compact-welcome-msg {
+                justify-content: center;
+                text-align: center;
+            }
+
+            /* 5. Full Width Buttons */
+            .msr-compact-actions {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .msr-compact-btn {
+                flex: 1 1 40%; /* Allow buttons to grow */
+                justify-content: center;
+                min-width: 120px;
+            }
+
+            .activity-header-wrapper { font-size: 14px; padding: 10px 12px; margin-bottom: 0; }
+            .page-discover { flex: none; height: 380px; padding: 14px; border-radius: 0 0 16px 16px; }
+            .page-discover .custom-item { padding: 12px; margin-bottom: 10px; border-radius: 12px; }
+            .page-discover .avatar-activity { width: 40px; height: 40px; }
+            .page-discover .avatar-wrapper-activity { margin-left: 12px; }
+            .page-discover .title { font-size: 14px; }
+            .page-discover .desc { font-size: 12px; }
+            .page-discover .date { font-size: 10px; }
+            #wrap .module:not(#fa_ticker_block .module), #wrap .panel, #wrap .block, #wrap [id^="block"] { margin-top: 15px !important; }
+            @keyframes fadeInUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+        }
+
+        @media (max-width: 400px) {
+            /* تكبير العنوان والوصف للشاشات الصغيرة جداً */
+            .msr-hero-title { font-size: 30px !important; line-height: 1.3; }
+            .msr-highlight { font-size: 26px !important; }
+            .msr-hero-desc { font-size: 16px !important; line-height: 1.7; }
+            
+            .msr-hero-visual { height: 320px; }
+            .page-discover { height: 260px; padding: 10px; }
+            .msr-quick-card { padding: 14px; gap: 10px; }
+            .msr-card-icon { width: 40px; height: 40px; font-size: 18px; }
+        }
+      
+        /* === Extra Small Screens (Header Fix) === */
+        @media (max-width: 480px) {
+            #header-user span {
+                max-width: 90px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                vertical-align: middle;
+            }
+            #header-user img {
+                width: 30px; height: 30px;
+            }
+        }
+
+        #header-navigation { display: none !important; }
+        #search-main input { display: none !important; }
+        #search-main { display: none !important; }
+      
+        #logo img {
+            max-height: 60%;
+            width: auto;
+            margin: 11px 0px 0px 0px;
+        }
+      /* --- تنسيق عناوين الفئات --- */
+
+/* 1. الشاشات الكبيرة (الكمبيوتر) */
+.msr-category-title span,
+.msr-category-title .colored-part-1,
+.msr-category-title .colored-part-2 {
+    font-size: 30px !important; /* الحجم الكبير الذي طلبته */
+    line-height: 1.3;
+    word-wrap: break-word;       /* لمنع خروج الكلمات الطويلة */
+    overflow-wrap: break-word;
+    white-space: normal;         /* السماح بنزول السطر */
+}
+
+/* 2. الشاشات المتوسطة (التابلت) */
+@media (max-width: 991px) {
+    .msr-category-title span,
+    .msr-category-title .colored-part-1,
+    .msr-category-title .colored-part-2 {
+        font-size: 24px !important; /* تصغير قليل */
+    }
+}
+
+/* 3. شاشات الموبايل (الوضع العمودي) */
+@media (max-width: 480px) {
+    .msr-category-title span,
+    .msr-category-title .colored-part-1,
+    .msr-category-title .colored-part-2 {
+        font-size: 18px !important; /* تصغير كبير ليتناسب مع العرض الصغير */
+    }
+}
+    </style>
+</head>
+
+<body id="top">
+<!-- BEGIN switch_login_popup -->
+<div id="login_popup" class="block-subtle" style="z-index: 10001 !important;">
+    <div class="headline">
+        {SITENAME}
+        <button title="{L_LOGIN_CLOSE}" id="login_popup_close"><i class="material-symbols-outlined">close</i></button>
+    </div>
+    <div id="login_popup_content">
+        <div id="login_popup_message">{LOGIN_POPUP_MSG}</div>
+        <br />
+        <div id="login_popup_buttons">
+            <!-- BEGIN switch_quick_login -->
+            <div class="mt10">
+                <div class="social_btn">
+                    <!-- BEGIN fb_quick_connect -->
+                    <div class="fb-login-button"></div>
+                    <!-- END fb_quick_connect -->
+                     
+                    <!-- BEGIN topicit_quick_connect -->
+                    <div class="ti-connect"></div>
+                    <!-- END topicit_quick_connect -->
+                </div>
+            </div>
+            <br/>
+            <!-- END switch_quick_login -->
+            <form action="{S_LOGIN_ACTION}" method="get">
+                <input type="submit" value="{L_LOGIN}" class="btn btn-default" />
+                <input type="button" value="{L_REGISTER}" onclick="parent.location='{U_REGISTER}';" class="btn btn-default" />
+            </form>
+        </div>
+    </div>
+</div>
+<!-- END switch_login_popup -->
+
+{GREETING_POPUP}
+
+<!-- BEGIN inactive_users_modal -->
+<div id="inactive_popup" class="block-subtle" style="z-index: 10000 !important;">
+    <div class="headline">
+        {inactive_users_modal.L_MODAL_TITLE}
+        <button title="{inactive_users_modal.L_CLOSE}" id="inactive_popup_close"><i class="material-symbols-outlined">close</i></button>
+    </div>
+    <div id="inactive_popup_message">{inactive_users_modal.L_MODAL_BODY}</div>
+    <br />
+    <div id="inactive_popup_buttons">
+        <button id="inactive_popup_url" class="button1">{inactive_users_modal.L_MODAL_BUTTON}</button>
+    </div>
+</div>
+<script type="text/javascript">
+    $('#inactive_popup #inactive_popup_close').on('mouseup', function () {
+        document.cookie = "modal_require_activation_closed=1; max-age=86400*15; path=/;";
+        $('#inactive_popup').hide(50);
+    });
+    $('#inactive_popup #inactive_popup_url').on('mouseup', function () {
+        document.cookie = "modal_require_activation_closed=1; max-age=86400*15; path=/;";
+        location.href = '{inactive_users_modal.U_MODAL}'
+    })
+</script>
+<!-- END inactive_users_modal -->
+
+<!-- BEGIN switch_like_popup -->
+<div id="like_popup" class="block-subtle" style="z-index: 10001 !important;">
+    <div class="headline">
+        {SITENAME}
+        <button title="{L_LIKE_CLOSE}" id="like_popup_close"><i class="material-symbols-outlined">close</i></button>
+    </div>
+    <div id="like_popup_message">{LIKE_POPUP_MSG}</div>
+    <br />
+    <div id="like_popup_buttons">
+        <form action="{S_LOGIN_ACTION}" method="get">
+            <input type="submit" value="{L_LOGIN}" class="btn btn-default" />
+            <input type="button" value="{L_REGISTER}" onclick="parent.location='{U_REGISTER}';" class="btn btn-default" />
+        </form>
+    </div>
+</div>
+<!-- END switch_like_popup -->
+
+<header>
+    <div id="main-menu-btn">
+        <i class="material-symbols-outlined">menu</i>
+    </div>
+    <a id="logo-link" href="{U_INDEX}">
+        <div id="logo">
+            <!-- BEGIN switch_logo_mob -->
+            <img src="{switch_logo_mob.LOGO_MOB}" alt="{L_INDEX}" loading="lazy" />
+            <!-- END switch_logo_mob -->
+        </div>
+        <!-- BEGIN switch_h1 -->
+        <span id="logo-text">{switch_h1.MAIN_SITENAME}</span>
+        <!-- END switch_h1 -->
+    </a>
+    <!-- BEGIN switch_user_logged_out -->
+    <a href="{S_LOGIN_ACTION}" class="button">{L_LOGIN}</a>
+    <!-- END switch_user_logged_out -->
+    <!-- BEGIN switch_user_logged_in -->
+    <a href="javascript:void(0)" id="header-user"></a>
+    <a href="javascript:void(0)" id="header-notif"><i class="material-symbols-outlined">notifications</i></a>
+    <!-- END switch_user_logged_in -->
+    <form method="get" action="{ACTION_SEARCH}" id="search-main">
+        <input type="text" name="search_keywords" maxlength="128" placeholder="{L_SEARCH}" />
+        <button type="submit"><i class="material-icons">search</i></button>
+    </form>
+    <ul id="header-navigation">
+        <li><a id="navigation-home" href="{NAVIGATION_HOME}"><i class="material-icons">apps</i>{L_FORUM}</a></li>
+        <li><a id="navigation-recent" href="/latest"><i class="material-icons">comment</i>{L_TOPICS}</a></li>
+        <!-- BEGIN discover_active -->
+        <li><a id="navigation-discover" href="/discover"><i class="material-icons">history</i>{L_TOPICS}</a></li>
+        <!-- END discover_active -->
+    </ul>
+</header>
+
+<div id="main-menu" class="hidden">
+    <div class="main-menu-headline">{SITENAME}</div>
+    
+    <!-- زر كرتون زمان الخاص بالقائمة الجانبية -->
+    <a href="https://msrooor.yoo7.com/h1-page" class="cartoon-btn">
+        <i class="material-icons">tv</i>
+        <span class="white-text"> كرتون </span>
+        <span class="red-text"> زمـــــان</span>
+    </a>
+</div>
+
+<div id="main-user-menu" class="hidden"></div>
+
+<div id="notif-menu" class="hidden">
+    <div class="main-menu-headline" data-text="_lang['Notifications']"></div>
+    <ul id="notif_list">
+        <li id="notif-view-all"><a href="/profile?mode=editprofile&page_profil=notifications" data-text="_lang['Notif_see_all']"></a></li>
+    </ul>
+</div>
+<div id="live_notif"></div>
+
+<div id="header-banner">
+    <div class="wrap">
+        <!-- BEGIN switch_desc -->
+        <h2 style="transition: none !important; opacity: 0;">{switch_desc.SITE_DESCRIPTION}</h2>
+        <!-- END switch_desc -->
+    </div>
+</div>
+
+<!-- ★★★ HERO SECTION ★★★ -->
+<section class="msr-hero" id="home">
+    <div class="msr-container">
+        <div class="msr-hero-grid">
+
+            <!-- === LEFT COLUMN: Content === -->
+            <div class="msr-hero-content">
+                
+                <div class="top-content-wrapper">
+                    <div class="msr-hero-badge">
+                        <i class="fas fa-bolt"></i> أهلاً بك في مجتمعنا الشبابي
+                    </div>
+
+                    <h2 class="msr-hero-title">
+                        <span id="msr-site-name">{SITENAME}</span> <br />
+          <span class="msr-highlight"> ذكريات تدوم وصداقات لا تُنسى</span>
+                    </h2>
+
+                    <!-- Dynamic Text based on Status -->
+                    <p class="msr-hero-desc">
+                        <!-- BEGIN switch_user_logged_out -->
+                        مساحة مريحة للنقاش الهادف والإبداع. انضم إلينا لتكتشف عالماً من المواضيع الشيقة والمحتوى الحصري في بيئة تحترم راحتك.
+                        <!-- END switch_user_logged_out -->
+                        
+                        <!-- BEGIN switch_user_logged_in -->
+                        أهلاً بك في مجتمعك الخاص! نحن سعداء بوجودك معنا، تصفح بكل حرية وشاركنا إبداعاتك وآرائك.
+                        <!-- END switch_user_logged_in -->
+                    </p>
+
+                    <!-- Member Card -->
+                    <!-- BEGIN switch_user_logged_in -->
+                    <div class="main-inner1">
+                        <div class="msr-compact-user-card">
+                            <div class="msr-compact-avatar"> </div>
+                            <div class="msr-compact-info">
+                                <span class="msr-compact-greeting">
+                                    <i class="material-symbols-outlined">waving_hand</i>
+                                    أهلاً بعودتك
+                                </span>
+                                <span class="msr-compact-name">{LOGGED_AS}</span>
+                                <span class="msr-compact-welcome-msg">
+                                    <i class="fas fa-sparkles"></i>
+                                    أهلاً بك يا بطل! نتمنى لك تصفحاً ممتعاً. شاركنا رأيك وأبدع في الطرح.
+                                </span>
+                            </div>
+                            <div class="msr-compact-actions">
+                                <a href="/profile?mode=editprofile" class="msr-compact-btn msr-cbtn-outline">
+                                    <i class="material-symbols-outlined">settings</i>
+                                    البيانات
+                                </a>
+                                <a href="/profile?mode=editprofile&page_profil=avatars" class="msr-compact-btn msr-cbtn-primary">
+                                    <i class="material-symbols-outlined">photo_camera</i>
+                                    الصورة
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END switch_user_logged_in -->
+
+                    <!-- Guest Buttons -->
+                    <!-- BEGIN switch_user_logged_out -->
+                    <div class="msr-guest-actions">
+                        <a href="/login" class="msr-btn-login">
+                            <i class="fas fa-sign-in-alt"></i>
+                            دخول المنتدى
+                        </a>
+                        <a href="/register" class="msr-btn-register">
+                            <i class="fas fa-user-plus"></i>
+                            <span>تسجيل عضوية جديدة</span>
+                        </a>
+                    </div>
+
+                    <div class="msr-hero-description">
+                        <p>
+                            انضم لفريقنا اليوم وكن جزءاً من <strong>مجتمعنا الشبابي</strong>. سجّل الآن واستمتع بمزايا حصرية وطرح مواضيعك بكل حرية!
+                        </p>
+                    </div>
+                    <!-- END switch_user_logged_out -->
+                </div>
+
+                <!-- ★★★ CARDS (منقولة من الكود 1) ★★★ -->
+                <div class="msr-quick-cards">
+                    
+                    <!-- Card 1: كرتون زمان -->
+                    <a href="https://msrooor.yoo7.com/h1-page" class="msr-quick-card">
+                        <div class="msr-card-icon">
+                            <i class="fas fa-tv"></i>
+                        </div>
+                        <div class="msr-card-text">
+                            <span class="msr-card-title">كرتون زمان</span>
+                            <span class="msr-card-sub">مشاهدة مباشرة</span>
+                        </div>
+                    </a>
+
+                    <!-- Card 2: تطبيق مسرووور -->
+                    <a href="https://msrooor.yoo7.com/h2-page" class="msr-quick-card">
+                        <div class="msr-card-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="msr-card-text">
+                            <span class="msr-card-title">تطبيق مسرووور</span>
+                            <span class="msr-card-sub">حمل الإصدار الجديد</span>
+                        </div>
+                    </a>
+
+                </div>
+                <!-- ★★★ END CARDS ★★★ -->
+
+            </div>
+            <!-- === END LEFT COLUMN === -->
+
+
+            <!-- === RIGHT COLUMN: Activity === -->
+            <div class="msr-hero-visual">
+                <!-- إضافة الحاوية المطلقة لمنع تمدد الارتفاع -->
+                <div class="msr-visual-inner">
+                    <div class="activity-header-wrapper">
+                        <span><i class="fas fa-signal" style="color:#2563EB; margin-left:5px;"></i> آخر النشاطات</span>
+                        <a href="/discover" style="font-size:12px; color:#64748B; font-weight:700;">عرض الكل</a>
+                    </div>
+
+                    <div class="page-discover">
+                        <div class="custom-feed" id="feed-container">
+                            <div style="text-align:center; padding: 20px; color: #94A3B8;">جاري تحميل الأنشطة...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- === END RIGHT COLUMN === -->
+            
+        </div>
+    </div>
+</section>
+
+<!-- TOAST -->
+<div class="msr-toast" id="msrToast">
+    <i class="fas fa-check-circle"></i>
+    <span id="msrToastMsg"></span>
+</div>
+
+<div id="wrap">
+
+    <!-- BEGIN switch_ticker -->
+    <div id="fa_ticker_block">
+        <div class="module">
+            <div class="inner">
+                <div id="fa_ticker_container">
+                    <div id="fa_ticker" style="height:{switch_ticker.HEIGHT}px;">
+                        <div class="fa_ticker_content">
+                            <!-- BEGIN ticker_row -->
+                            <div>{switch_ticker.ticker_row.ELEMENT}</div>
+                            <!-- END ticker_row -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END switch_ticker -->
+
+    <!-- BEGIN html_validation -->
+</div><!-- <div id="wrap" /> -->
+
+<script>
+    // ===== Reveal on Scroll =====
+    var msrRevealObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('msr-visible');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.msr-reveal').forEach(function(el) {
+        msrRevealObserver.observe(el);
+    });
+
+    // ===== Toast =====
+    function msrShowToast(msg) {
+        var toast = document.getElementById('msrToast');
+        var toastMsg = document.getElementById('msrToastMsg');
+        toastMsg.textContent = msg;
+        toast.classList.add('msr-show');
+        setTimeout(function() { toast.classList.remove('msr-show'); }, 3000);
+    }
+</script>
+
+<!-- كود تلوين الكلمة الثانية للعنوان في الهيدر والبانر -->
+<script type="text/javascript">
+ $(function() {
+    // تحديد الألوان
+    var colorFirstWord = "#0F172A"; // لون الكلمة الأولى (داكن)
+    var colorRestWords = "#2563EB"; // لون الكلمة الثانية فما فوق (أزرق)
+
+    // إضافة تنسيقات CSS
+    $('head').append('<style>' +
+        '#logo-text, #logo-text h1, #logo-text a, #msr-site-name { visibility: visible !important; opacity: 1 !important; text-decoration: none !important; }' +
+        '.colored-part-1 { color: ' + colorFirstWord + ' !important; text-decoration: none !important; border-bottom: none !important; background: none !important; }' +
+        '.colored-part-2 { color: ' + colorRestWords + ' !important; text-decoration: none !important; border-bottom: none !important; background: none !important; }' +
+        '.colored-part-1::after, .colored-part-2::after { content: none !important; display: none !important; }' +
+    '</style>');
+
+    function paintMyTitle(selector) {
+        var $container = $(selector);
+        if ($container.length === 0) return;
+
+        var $target = $container.find('h1');
+        if ($target.length === 0) $target = $container;
+
+        if ($target.find('.colored-part-1').length > 0) return;
+
+        var text = $target.text().trim();
+
+        if (text.length > 0) {
+            var parts = text.split(" ");
+            if (parts.length > 1) {
+                var first = parts.shift();
+                var rest = parts.join(" ");
+                $target.html(
+                    '<span class="colored-part-1">' + first + '</span> ' +
+                    '<span class="colored-part-2">' + rest + '</span>'
+                );
+            } else {
+                $target.html('<span class="colored-part-1">' + text + '</span>');
+            }
+        }
+    }
+
+    // تطبيق الدالة على كلا الموقعين
+    function applyPaint() {
+        paintMyTitle('#logo-text');       // الهيدر العلوي
+        paintMyTitle('#msr-site-name');   // بانر الترحيب
+    }
+
+    applyPaint();
+    setInterval(applyPaint, 500);
+});
+</script>
+
+</body>
+</html>
+<!-- END html_validation -->
+<div class="navbar navlinks {NAVBAR_BORDERLESS}" style="display: none;">
+   {GENERATED_NAV_BAR}
+</div>  
+  
+  
