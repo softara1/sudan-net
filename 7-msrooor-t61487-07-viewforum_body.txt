@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MSR Forum View - Clean Version</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        /* ===== متغيرات التصميم ===== */
+        :root {
+            --msr-blue: #2563EB;
+            --msr-blue-dark: #1D4ED8;
+            --msr-cyan: #0EA5E9;
+            --msr-violet: #8B5CF6;
+            
+            --msr-bg: #F1F5F9;
+            --msr-card-bg: #FFFFFF;
+            --msr-card-bg-alt: #F8FAFC;
+            --msr-border: #E2E8F0;
+            --msr-border-hover: #CBD5E1;
+
+            --msr-text-primary: #1E293B;
+            --msr-text-secondary: #475569;
+            --msr-text-muted: #94A3B8;
+
+            --msr-accent-glow: rgba(37, 99, 235, 0.3);
+            --msr-gold: #F59E0B;
+        }
+
+        body {
+            background-color: var(--msr-bg) !important;
+            color: var(--msr-text-primary);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* إخفاء عناصر القالب القديمة */
+        #header-banner { display: none !important; }
+        .page-header, .topic-actions.paged { display: none !important; }
+
+        /* ===== الحاوية الرئيسية ===== */
+        .viewforum-wrapper {
+            max-width: 1280px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        /* ===== قسم العنوان (Hero Header) ===== */
+        .forum-header-section {
+            background: var(--msr-card-bg);
+            border: 1px solid var(--msr-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .forum-header-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .forum-header-inner {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .forum-header-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--msr-blue), var(--msr-cyan));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 8px 25px var(--msr-accent-glow);
+        }
+
+        .forum-header-text {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .forum-header-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--msr-text-primary);
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+        
+        .forum-header-title a { text-decoration: none; color: inherit; }
+        .forum-header-title a:hover { color: var(--msr-blue); }
+
+        .forum-header-desc {
+            font-size: 14px;
+            color: var(--msr-text-secondary);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .forum-header-actions { flex-shrink: 0; z-index: 2; }
+
+        /* ===== الأزرار الرئيسية (Primary) ===== */
+        .forum-btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: var(--msr-blue);
+            color: #ffffff !important;
+            font-size: 14px;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px var(--msr-accent-glow);
+        }
+
+        .forum-btn-primary:hover {
+            transform: translateY(-2px);
+            background: var(--msr-blue-dark);
+            box-shadow: 0 6px 20px var(--msr-accent-glow);
+            color: #ffffff !important;
+        }
+
+        /* ===== الأزرار النصية بدون إطار (Ghost Buttons) ===== */
+        .forum-btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            background: transparent;
+            color: var(--msr-text-secondary);
+            border: none;
+            border-radius: 0;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .forum-btn-ghost:hover {
+            background: transparent;
+            color: var(--msr-blue);
+        }
+
+        /* ===== مسار التنقل (Breadcrumbs) ===== */
+        .viewforum-breadcrumbs {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 0;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            margin-bottom: 25px;
+            font-size: 14px;
+            color: var(--msr-text-muted);
+        }
+
+        .viewforum-breadcrumbs a {
+            color: var(--msr-text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .viewforum-breadcrumbs a:hover { 
+            color: var(--msr-blue); 
+        }
+        
+        .viewforum-breadcrumbs i { color: var(--msr-blue); font-size: 12px; }
+
+        /* ===== شريط الإجراءات ===== */
+        .viewforum-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .viewforum-actions-left, .viewforum-actions-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* ===== تنسيق قائمة المواضيع (Topics List Box) ===== */
+        .forabg, .topiclist {
+            background: var(--msr-card-bg) !important;
+            border: 1px solid var(--msr-border) !important;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            padding: 5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .forabg ul.topiclist {
+            border: none;
+            padding: 0;
+            background: transparent;
+        }
+
+        .forabg .header {
+            background: var(--msr-card-bg-alt) !important;
+            border-bottom: 1px solid var(--msr-border) !important;
+            padding: 15px 20px !important;
+            border-radius: 12px 12px 0 0 !important;
+            margin: 0;
+        }
+
+        .forabg .header .dterm, .forabg .header dt, .forabg .header .topics, .forabg .header .posts, .forabg .header .lastpost {
+            color: var(--msr-text-muted) !important;
+            font-weight: 700 !important;
+            font-size: 13px !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .forabg .header .dterm { color: var(--msr-text-primary) !important; }
+
+        ul.topiclist li.row {
+            background: transparent !important;
+            border-bottom: 1px solid var(--msr-border);
+            padding: 16px 15px;
+            transition: all 0.3s;
+            border-radius: 8px;
+            margin-bottom: 2px;
+        }
+
+        ul.topiclist li.row:hover {
+            background: rgba(37, 99, 235, 0.03) !important;
+            border-color: rgba(37, 99, 235, 0.1);
+        }
+
+        ul.topiclist li:last-child { border-bottom: none; }
+
+        a.topictitle {
+            color: var(--msr-text-primary) !important;
+            font-weight: 700 !important;
+            font-size: 15px !important;
+            display: block;
+            margin-bottom: 4px;
+            transition: color 0.2s;
+        }
+
+        a.topictitle:hover {
+            color: var(--msr-blue) !important;
+            padding-right: 5px;
+        }
+
+        .icon { display: none; }
+        dl.icon {
+            background-position: 98% 50% !important;
+            background-repeat: no-repeat !important;
+        }
+
+        .topics, .posts, .views {
+            color: var(--msr-blue) !important;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        
+        .topics span, .posts span, .views span {
+            color: var(--msr-text-muted);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .lastpost {
+            color: var(--msr-text-secondary) !important;
+            font-size: 12px;
+        }
+        
+        .lastpost span {
+            color: var(--msr-text-primary);
+            display: block;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+        
+        .lastpost a { color: var(--msr-text-primary); transition: 0.2s; }
+        .lastpost a:hover { color: var(--msr-blue); }
+
+        /* ==============================================
+           ★★★ تصميم الترقيم الاحترافي الجديد وكبير الحجم ★★★
+           ============================================== */
+        .msr-pro-pagination {
+            display: flex;
+            align-items: center;
+            gap: 8px; 
+            flex-wrap: wrap;
+          font-size: 18px !important;
+        }
+
+        /* الحاوية الأساسية التي يولدها أحلى منتدى */
+        .msr-pro-pagination .pagination {
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important; 
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            font-size: 0 !important;
+            box-shadow: none !important;
+        }
+
+        /* الأزرار والأرقام بشكل عام */
+        .msr-pro-pagination .pagination a,
+        .msr-pro-pagination .pagination span,
+        .msr-pro-pagination .pagination strong {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            min-width: 48px; 
+            height: 48px; 
+            padding: 0 18px !important; 
+            border-radius: 14px !important; 
+            font-size: 22px !important; /* حجم الخط الكبير */
+            font-weight: 700 !important;
+            text-decoration: none !important;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+            background: var(--msr-card-bg);
+            border: 1px solid var(--msr-border) !important;
+            color: var(--msr-text-primary);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+            white-space: nowrap;
+            line-height: 1 !important;
+        }
+
+        /* إخفاء الصور والفواصل القديمة */
+        .msr-pro-pagination .pagination img,
+        .msr-pro-pagination .pagination .page-sep {
+            display: none !important;
+        }
+        
+        /* روابط الأرقام العادية */
+        .msr-pro-pagination .pagination a {
+            color: var(--msr-blue) !important;
+        }
+
+        /* تأثير المرور (Hover) الاحترافي */
+        .msr-pro-pagination .pagination a:hover {
+            background: var(--msr-blue) !important;
+            color: #ffffff !important;
+            border-color: var(--msr-blue) !important;
+            box-shadow: 0 10px 25px var(--msr-accent-glow) !important;
+            transform: translateY(-4px); 
+        }
+
+        /* الصفحة النشطة (Active) بتدرج لوني */
+        .msr-pro-pagination .pagination strong,
+        .msr-pro-pagination .pagination span.active,
+        .msr-pro-pagination .pagination a.current {
+            background: linear-gradient(135deg, var(--msr-blue), var(--msr-cyan)) !important;
+            color: #ffffff !important;
+            border: none !important;
+            box-shadow: 0 10px 30px var(--msr-accent-glow) !important;
+            transform: scale(1.1); 
+            cursor: default;
+        }
+
+        /* أزرار التنقل (التالي، السابق، الأول، الأخير) */
+        .msr-pro-pagination .pagination a[href*="start"],
+        .msr-pro-pagination .pagination span.pag-prev a,
+        .msr-pro-pagination .pagination span.pag-next a,
+        .msr-pro-pagination .pagination span.pag-first a,
+        .msr-pro-pagination .pagination span.pag-last a {
+            padding: 0 24px !important; 
+            gap: 10px;
+            background: var(--msr-card-bg-alt);
+            font-weight: 800 !important;
+            color: var(--msr-text-secondary) !important;
+            border: 1px solid var(--msr-border) !important;
+        }
+
+        /* تأثير هوفر خاص لأزرار التنقل */
+        .msr-pro-pagination .pagination a[href*="start"]:hover,
+        .msr-pro-pagination .pagination span.pag-prev a:hover,
+        .msr-pro-pagination .pagination span.pag-next a:hover,
+        .msr-pro-pagination .pagination span.pag-first a:hover,
+        .msr-pro-pagination .pagination span.pag-last a:hover {
+            color: #ffffff !important;
+            background: var(--msr-violet) !important;
+            border-color: var(--msr-violet) !important;
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3) !important;
+        }
+
+        /* =========================================
+           ★ الشريط الموحد (إجراءات يمين - ترقيم يسار) بدون خلفية ★
+           ========================================= */
+        .msr-unified-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 30px 0;
+            padding: 0;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        /* اليمين: سيحتوي على الإجراءات (مراقبة ثم اعتبرني قرأت) */
+        .msr-unified-right {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            justify-content: flex-start;
+            gap: 20px;
+        }
+
+        /* اليسار: سيحتوي على أرقام الصفحات */
+        .msr-unified-left {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        /* تنسيق مخرجات متغير مراقبة القسم ({S_WATCH_FORUM}) */
+        .msr-watch-link a, .msr-watch-link input[type="submit"] {
+            display: inline-flex !important;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px !important;
+            background: transparent !important;
+            color: var(--msr-text-secondary) !important;
+            border: none !important;
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            text-decoration: none !important;
+            cursor: pointer;
+            transition: all 0.3s !important;
+            font-family: inherit !important;
+            white-space: nowrap;
+        }
+
+        .msr-watch-link a::before, .msr-watch-link input[type="submit"]::before {
+            content: '\f06e';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            margin-left: 5px;
+            font-size: 12px;
+        }
+
+        .msr-watch-link a:hover, .msr-watch-link input[type="submit"]:hover {
+            color: var(--msr-blue) !important;
+            background: transparent !important;
+        }
+
+        /* القائمة العائمة للترتيب */
+        #sort-box { position: relative; }
+        .sort-form {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--msr-card-bg);
+            border: 1px solid var(--msr-border);
+            border-radius: 12px;
+            padding: 15px;
+            z-index: 100;
+            min-width: 250px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+        #sort-btn.expanded ~ .sort-form { display: block; }
+
+        .sort-form select {
+            width: 100%;
+            padding: 8px;
+            background: var(--msr-bg);
+            border: 1px solid var(--msr-border);
+            color: var(--msr-text-primary);
+            border-radius: 8px;
+            margin-top: 5px;
+            outline: none;
+        }
+
+        /* ===== الزر العائم (FAB) ===== */
+        .forum-fab {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 56px;
+            height: 56px;
+            background: var(--msr-blue);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 6px 20px var(--msr-accent-glow);
+            font-size: 24px;
+            z-index: 999;
+            transition: transform 0.3s, background 0.3s;
+        }
+        .forum-fab i { color: #ffffff !important; }
+        .forum-fab:hover { transform: rotate(90deg) scale(1.1); background: var(--msr-blue-dark); }
+
+        /* =========================================
+           ★ بلوك المشرفين والصلاحيات ★
+           ========================================= */
+        .msr-main-wrapper {
+            display: inline-flex !important; align-items: stretch !important; width: 100%;
+            background: var(--msr-card-bg) !important; border: 1px solid var(--msr-border) !important;
+            border-radius: 16px !important; overflow: hidden !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06) !important; margin-bottom: 30px; transition: all 0.35s ease;
+        }
+        .msr-main-wrapper:hover {
+            transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1) !important;
+            border-color: var(--msr-border-hover) !important;
+        }
+        .msr-half { flex: 1; padding: 0; display: flex !important; flex-direction: column !important; background: transparent !important; }
+        .msr-vline {
+            width: 1px !important; align-self: stretch !important;
+            background: linear-gradient(to bottom, transparent, var(--msr-border) 15%, var(--msr-border) 85%, transparent) !important;
+            flex-shrink: 0 !important; margin: 20px 0;
+        }
+        .msr-head {
+            display: flex !important; align-items: center !important; gap: 14px !important;
+            padding: 14px 20px !important; border-bottom: 1px solid var(--msr-border) !important;
+            background: var(--msr-card-bg-alt) !important; position: relative;
+        }
+        .msr-head::after {
+            content: '' !important; position: absolute !important; bottom: 0 !important; left: 20px !important; right: 20px !important;
+            height: 1px !important; background: linear-gradient(to left, transparent, var(--msr-border) 30%, var(--msr-border) 70%, transparent) !important;
+        }
+        .msr-title {
+            margin: 0 !important; font-size: 18px !important;
+            font-weight: 800; color: var(--msr-text-primary) !important; line-height: 1.3;
+        }
+        .msr-icon {
+            width: 42px !important; height: 42px !important; border-radius: 11px !important;
+            display: flex !important; align-items: center !important; justify-content: center !important;
+            font-size: 18px !important; flex-shrink: 0; transition: transform 0.3s ease; color: #ffffff !important;
+        }
+        .msr-main-wrapper:hover .msr-icon { transform: scale(1.05); }
+        .mod-icon {
+            background: linear-gradient(135deg, var(--msr-blue), var(--msr-cyan)) !important;
+            box-shadow: 0 3px 14px rgba(37, 99, 235, 0.3) !important;
+        }
+        .perm-icon {
+            background: linear-gradient(135deg, var(--msr-violet), var(--msr-cyan)) !important;
+            box-shadow: 0 3px 14px rgba(139, 92, 246, 0.3) !important;
+        }
+        .msr-body {
+            padding: 20px 24px !important; color: var(--msr-text-secondary) !important;
+            font-size: 14px !important; line-height: 1.8 !important; background: transparent !important;
+        }
+        .msr-body a {
+            color: var(--msr-blue) !important; text-decoration: none !important;
+            font-weight: 700; transition: all 0.3s ease !important;
+        }
+        .msr-body a:hover { color: var(--msr-blue-dark) !important; }
+        .msr-half:first-of-type .msr-body a:not(:last-child)::after {
+            content: ' • ' !important; color: var(--msr-border) !important; font-size: 10px !important; margin: 0 2px !important;
+        }
+
+        /* ===== استجابة الموبايل ===== */
+        @media (max-width: 768px) {
+            .forum-header-section { flex-direction: column; text-align: center; padding: 20px; }
+            .forum-header-inner { flex-direction: column; text-align: center; }
+            .viewforum-actions { flex-direction: column; align-items: stretch; }
+            .viewforum-actions-left, .viewforum-actions-right { justify-content: center; }
+            
+            .topics, .posts, .lastpost { display: none; }
+            .dterm { width: 100% !important; }
+
+            .msr-main-wrapper { flex-direction: column !important; border-radius: 16px !important; }
+            .msr-vline { width: 80% !important; height: 1px !important; align-self: center !important; margin: 0 auto !important; background: linear-gradient(to right, transparent, var(--msr-border) 15%, var(--msr-border) 85%, transparent) !important; }
+            
+            /* تعديلات الشريط الموحد للموبايل */
+            .msr-unified-bar {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            .msr-unified-right, .msr-unified-left {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            /* تعديلات الترقيم للموبايل */
+            .msr-pro-pagination .pagination a,
+            .msr-pro-pagination .pagination span,
+            .msr-pro-pagination .pagination strong {
+                min-width: 42px; 
+                height: 42px; 
+                font-size: 18px !important; 
+                border-radius: 12px !important;
+                padding: 0 12px !important;
+            }
+            
+            .forum-fab { bottom: 20px; left: 20px; width: 48px; height: 48px; }
+        }
+      
+.select-wrap select, .jumpbox-wrap select, .quickmod-wrap select {
+    background-color: #fff;
+    border-color: #DCDCDC;
+    border-style: solid;
+    border-width: 2px;
+    margin-left: 11px;
+    padding-right: 11px;
+    padding-left: 22px;
+    background: var(--msr-card-bg) !important;
+    border: 1px solid var(--msr-border) !important;
+    border-radius: 7px !important;
+    -bottom: 10px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06) !important;
+}
+      .page-header .btn, .topic-header .btn, .jumpbox-wrap input, .quickmod-wrap input, .select-wrap input, .pagination>a, .pagination>span, a.btn.btn-flat.mark-buttons, .btn, input[type="submit"], input[type="button"] {
+    background: #2563EB !important;
+    border: 1px solid #1D4ED8 !important;
+    box-shadow: none !important;
+    color: #FFFFFF !important;
+    border-radius: 8px;
+    border: 1px solid var(--msr-border) !important;
+    border-radius: 7px !important;
+    -bottom: 10px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06) !important;
+}
+      label>span, .label>span {
+    display: none !important;
+}
+    </style>
+</head>
+<body>
+
+<!-- عنوان القسم -->
+<div class="forum-header-section">
+    <div class="forum-header-inner">
+        <div class="forum-header-icon">
+            <i class="fas fa-comments"></i>
+        </div>
+        <div class="forum-header-text">
+            <h2 class="forum-header-title"><a href="{U_VIEW_FORUM}">{FORUM_NAME}</a></h2>
+            <!-- BEGIN switch_forum_desc -->
+            <p class="forum-header-desc">{SINGLE_FORUM_DESC}</p>
+            <!-- END switch_forum_desc -->
+        </div>
+    </div>
+    <div class="forum-header-actions">
+        <!-- BEGIN switch_user_authpost -->
+        <a href="{U_POST_NEW_TOPIC}" rel="nofollow" {S_POST_NEW_TOPIC} title="{T_POST_NEW_TOPIC}" class="forum-btn-primary">
+            <i class="fas fa-plus"></i>
+            <span>{L_POST_NEW_TOPIC}</span>
+        </a>
+        <!-- END switch_user_authpost -->
+    </div>
+</div>
+
+<div class="viewforum-wrapper">
+
+    <!-- مسار التنقل -->
+    <div class="viewforum-breadcrumbs">
+        <a href="{U_INDEX}"><i class="fas fa-home"></i> <span>{L_INDEX}</span></a>
+        {NAV_CAT_DESC}
+    </div>
+
+    <!-- أزرار الإجراءات العلوية -->
+    <div class="viewforum-actions">
+        <div class="viewforum-actions-left">
+            <!-- BEGIN show_plus_menu -->
+            <div class="plus-menu-wrap">
+                <script type="text/javascript">//<![CDATA[
+                    var url_newposts = '{U_NEWPOSTS_JS_PLUS_MENU}';
+                    var url_egosearch = '{U_EGOSEARCH_JS_PLUS_MENU}';
+                    var url_unanswered = '{U_UNANSWERED_JS_PLUS_MENU}';
+                    var url_watchsearch = '{U_WATCHSEARCH_JS_PLUS_MENU}';
+                    insert_plus_menu_new('f{FORUM_ID}&f={FORUM_ID}','{JS_SESSION_ID}', {JS_AUTH_FAVOURITES});
+                    //]]>
+                </script>
+            </div>
+            <!-- END show_plus_menu -->
+        </div>
+        <div class="viewforum-actions-right">
+            <!-- BEGIN switch_sort_options -->
+            <div id="sort-box">
+                <span class="forum-btn-ghost" id="sort-btn"><i class="fas fa-sort"></i> {switch_sort_options.L_SORT}</span>
+                <form method="post" class="sort-form">
+                    <div class="sort-form-label">{switch_sort_options.L_SORT_BY}</div>
+                    <select name="sort_method">
+                        {switch_sort_options.S_OPTIONS}
+                    </select>
+                    <div class="sort-form-label">{switch_sort_options.L_ORDER}</div>
+                    <div class="sort-radio-group">
+                        <label><input type="radio" name="sort_order" id="sort_order_d" value="0" {switch_sort_options.DESC_CHECKED}/> {switch_sort_options.L_DESC}</label>
+                        <label><input type="radio" name="sort_order" id="sort_order_a" value="1" {switch_sort_options.ASC_CHECKED}/> {switch_sort_options.L_ASC}</label>
+                    </div>
+                    <input class="forum-btn-primary" type="submit" value="{switch_sort_options.L_SORT}"/>
+                </form>
+            </div>
+            <!-- END switch_sort_options -->
+        </div>
+    </div>
+
+    <div class="clear"></div>
+
+    {BOARD_INDEX}
+
+    <div class="clear"></div>
+
+    {TOPICS_LIST_BOX}
+
+    <!-- ========== الشريط الموحد (تبديل الأماكن) ========== -->
+    <div class="msr-unified-bar">
+        
+        <!-- أقصى اليمين: مُراقبة (أولاً) ثم اعتبرني قرأت (ثانياً) -->
+        <!-- BEGIN switch_user_logged_in -->
+        <div class="msr-unified-right">
+            <span class="msr-watch-link">{S_WATCH_FORUM}</span>
+            <a class="forum-btn-ghost" href="{U_MARK_READ}"><i class="fas fa-check-double"></i> {L_MARK_TOPICS_READ}</a>
+        </div>
+        <!-- END switch_user_logged_in -->
+        
+        <!-- أقصى اليسار: أرقام الصفحات بالتصميم الجديد -->
+        <div class="msr-unified-left">
+            <div class="msr-pro-pagination">
+                {PAGINATION}
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- ========== تعديل التومبيلات الأساسية (المشرفين والصلاحيات) ========== -->
+    <div class="msr-main-wrapper">
+        <div class="msr-half">
+            <div class="msr-head">
+                <div class="msr-icon mod-icon"><i class="fas fa-user-shield"></i></div>
+                <span class="msr-title">{L_MODERATOR}</span>
+            </div>
+            <div class="msr-body">
+                {MODERATORS}
+            </div>
+        </div>
+        <div class="msr-vline"></div>
+        <div class="msr-half">
+            <div class="msr-head">
+                <div class="msr-icon perm-icon"><i class="fas fa-fingerprint"></i></div>
+                <span class="msr-title">{L_TABS_PERMISSIONS}</span>
+            </div>
+            <div class="msr-body">
+                {S_AUTH_LIST}
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== الكلاسات الأصلية المخفية ========== -->
+    <div class="block" style="display:none !important;">
+        <div class="block-header"><i class="material-symbols-outlined">school</i> {L_MODERATOR}</div>
+        <div class="block-content"><p>{MODERATORS}</p></div>
+    </div>
+    <div class="block" style="display:none !important;">
+        <div class="block-header"><i class="material-symbols-outlined">privacy_tip</i> {L_TABS_PERMISSIONS}</div>
+        <div class="block-content"><p>{S_AUTH_LIST}</p></div>
+    </div>
+
+    {JUMPBOX}
+
+</div>
+
+<!-- زر إضافة موضوع عائم -->
+<!-- BEGIN switch_user_authpost -->
+<a href="{U_POST_NEW_TOPIC}" rel="nofollow" {S_POST_NEW_TOPIC} class="forum-fab" title="{L_POST_NEW_TOPIC}">
+    <i class="fas fa-plus"></i>
+</a>
+<!-- END switch_user_authpost -->
+
+<!-- سكريبت الترتيب -->
+<!-- BEGIN switch_sort_options -->
+<script type="text/javascript">
+    //<![CDATA[
+    $(document).ready(function() {
+        var sort_btn = $('#sort-btn');
+        sort_btn.on('click', function() {
+            sort_btn.toggleClass('expanded');
+        });
+
+        document.onclick = function(e){
+            if ($(e.target).parents('#sort-box').length==0) {
+                document.getElementById('sort-btn').classList.remove('expanded');
+            }
+        };
+    });
+    //]]>
+</script>
+<!-- END switch_sort_options -->
+
+</body>
+</html>

@@ -1,0 +1,837 @@
+<!-- BEGIN switch_plus_menu -->
+<script type="text/javascript">
+    //<![CDATA[
+    var multiquote_img_off = '{JS_MULTIQUOTE_IMG_OFF}', multiquote_img_on = '{JS_MULTIQUOTE_IMG_ON}';
+</script>
+<!-- END switch_plus_menu -->
+<script type="text/javascript">
+    var hiddenMsgLabel = { visible:'{JS_HIDE_HIDDEN_MESSAGE}', hidden:'{JS_SHOW_HIDDEN_MESSAGE}' };
+    showHiddenMessage = function(id)
+    {
+        try
+        {
+            var regId = parseInt(id, 10);
+            if( isNaN(regId) ) { regId = 0; }
+            if( regId > 0)
+            {
+                $('.post--' + id).parent().toggle(0, function()
+                {
+                    if( $(this).is(":visible") )
+                    { $('#hidden-title--' + id).html(hiddenMsgLabel.visible); }
+                    else
+                    { $('#hidden-title--' + id).html(hiddenMsgLabel.hidden); }
+                });
+            }
+        }
+        catch(e) { }
+        return false;
+    };
+    //]]>
+</script>
+
+<!-- BEGIN switch_push_direct_send -->
+<div id="push-answer" class="jqmWindow"></div>
+<script src="{JQUERY_DIR}jqmodal/jqmodal.js" type="text/javascript"></script>
+<!-- END switch_push_direct_send -->
+
+<!-- استيراد الأيقونات فقط -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+
+<style>
+    /* ===== متغيرات التصميم ===== */
+    :root {
+        --msr-blue: #2563EB;
+        --msr-blue-dark: #1D4ED8;
+        --msr-cyan: #0EA5E9;
+        --msr-violet: #8B5CF6;
+        --msr-bg: #F1F5F9;
+        --msr-card-bg: #FFFFFF;
+        --msr-card-bg-alt: #F8FAFC;
+        --msr-border: #E2E8F0;
+        --msr-border-hover: #CBD5E1;
+        --msr-text-primary: #1E293B;
+        --msr-text-secondary: #475569;
+        --msr-text-muted: #94A3B8;
+        --msr-accent-glow: rgba(37, 99, 235, 0.3);
+        --msr-green: #4CAF50;
+        --radius-main: 12px;
+        --radius-sm: 6px;
+        --shadow-card: 0 4px 15px rgba(0,0,0,0.06);
+    }
+
+    * { box-sizing: border-box; outline: none; }
+    body { background-color: var(--msr-bg) !important; color: var(--msr-text-primary); }
+    #header-banner { display: none !important; }
+
+    .msr-topic-wrapper { max-width: 1280px; margin: 20px auto; padding: 0 20px; }
+
+    .msr-topic-header {
+        background: var(--msr-card-bg); border: 1px solid var(--msr-border); border-radius: 15px;
+        padding: 30px; margin-bottom: 24px; display: flex; align-items: center;
+        justify-content: space-between; flex-wrap: wrap; gap: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06); position: relative; overflow: hidden;
+    }
+    .msr-topic-header::before {
+        content: ''; position: absolute; top: -50%; right: -10%; width: 300px; height: 300px;
+        background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 70%); pointer-events: none;
+    }
+    .msr-topic-title h1 { font-size: 24px; font-weight: 800; margin: 0; color: var(--msr-text-primary); display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; line-height: 1.6 !important; }
+    .msr-topic-title i { color: var(--msr-blue); }
+    .msr-btn-primary i { color: #fff !important; }
+    .msr-topic-actions { display: flex; gap: 10px; z-index: 1; }
+    .msr-btn-small { padding: 10px 20px; border-radius: 50px; font-weight: 700; text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; }
+    .msr-btn-primary { background: var(--msr-blue); color: #fff !important; box-shadow: 0 4px 15px var(--msr-accent-glow); border: none; }
+    .msr-btn-primary:hover { transform: translateY(-2px); background: var(--msr-blue-dark); }
+    .msr-btn-secondary { background: var(--msr-card-bg-alt); border: 1px solid var(--msr-border); color: var(--msr-text-primary); }
+    .msr-btn-secondary:hover { background: #fff; border-color: var(--msr-blue); color: var(--msr-blue); }
+
+    .topic-cover-banner { display: none; position: relative; width: 100%; height: 400px; border-radius: 12px 12px 0px 0px; overflow: hidden; margin-bottom: 0px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid var(--msr-border); }
+    .topic-cover-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; background-repeat: no-repeat; transition: transform 5s ease; }
+    .topic-cover-banner:hover .topic-cover-bg { transform: scale(1.05); }
+    .topic-cover-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.95) 15%, rgba(255,255,255,0.6) 40%, rgba(255,255,255,0.1) 100%); z-index: 1; }
+    .topic-cover-content { position: absolute; bottom: 30px; right: 30px; left: 30px; z-index: 2; }
+    .topic-cover-content h2 { font-size: 32px; font-weight: 900; margin: 0; color: var(--msr-text-primary); text-shadow: 0 2px 10px rgba(255,255,255,0.8); line-height: 1.5 !important; }
+    .topic-cover-content .cover-meta { margin-top: 10px; font-size: 14px; color: var(--msr-blue); display: flex; align-items: center; gap: 10px; font-weight: 600; }
+
+    .topic-container { background: var(--msr-card-bg); border: 1px solid var(--msr-border); border-radius: var(--radius-main); overflow: hidden; box-shadow: var(--shadow-card); margin-bottom: 30px; }
+    .topic-header-bar { padding: 15px 25px; border-bottom: 1px solid var(--msr-border); display: flex; justify-content: space-between; align-items: center; background: var(--msr-card-bg-alt); }
+    .topic-header-bar h1 { margin: 0; font-size: 16px; color: var(--msr-text-primary); display: flex; align-items: center; gap: 10px; flex: 1; }
+    .topic-header-bar h1 a { color: var(--msr-text-secondary); text-decoration: none; transition: 0.3s; }
+    .topic-header-bar h1 a:hover { color: var(--msr-blue); }
+
+    .post-layout { display: flex; min-height: auto; }
+    .post-sidebar { width: 260px; background: var(--msr-card-bg-alt); border-left: 1px solid var(--msr-border); padding: 25px 15px; text-align: center; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }
+    .user-avatar-wrap { position: relative; width: 100px; height: 100px; margin-bottom: 15px; flex-shrink: 0; }
+  
+    /* === تنسيق الصورة الشخصية (حالة عدم الاتصال - الافتراضية) === */
+    .user-avatar-wrap img { 
+        width: 100%; height: 100%; border-radius: 50%; 
+        border: 3px solid var(--msr-border) !important; /* إطار رمادي محايد */
+        object-fit: cover; transition: all 0.4s ease; filter: none !important; box-shadow: none; 
+    }
+    .user-avatar-wrap:hover img { 
+        border-color: var(--msr-border-hover) !important; 
+        box-shadow: 0 0 10px rgba(0,0,0,0.05); 
+    }
+
+    /* === تنسيق الصورة الشخصية (حالة الاتصال) مع تأثير التنفس الأزرق كل 3 ثواني === */
+    .topic-container.online .user-avatar-wrap img { 
+        border-color: var(--msr-blue) !important; /* إطار أزرق ثابت دائماً */
+        animation: avatarBreathing 3s infinite ease-in-out; /* تأثير التنفس التلقائي */
+    }
+    /* عند مرور الماوس على العضو المتصل: إيقاف التنفس وتثبيت التوهج بقوة */
+    .topic-container.online .user-avatar-wrap:hover img { 
+        box-shadow: 0 0 25px rgba(37, 99, 235, 0.8) !important; 
+        animation-play-state: paused; /* إيقاف الأنيميشن مؤقتاً */
+    }
+
+    /* === نقطة الحالة (متصل/غير متصل) === */
+    .status-dot { 
+        position: absolute; bottom: 5px; left: 5px; width: 16px; height: 16px; 
+        background: var(--msr-text-muted); border: 3px solid var(--msr-card-bg-alt); 
+        border-radius: 50%; transition: all 0.3s; 
+    }
+    .topic-container.online .status-dot { 
+        background: var(--msr-blue); /* نقطة زرقاء */
+        border-color: var(--msr-card-bg-alt); 
+        animation: dotBreathing 3s infinite ease-in-out; /* النقطة تتنفس مع الصورة */
+    }
+
+    /* === أنيميشن التنفس الأزرق (ظهور واختفاء التوهج تلقائياً) === */
+    @keyframes avatarBreathing { 
+        0%, 100% { 
+            box-shadow: 0 0 5px rgba(37, 99, 235, 0.2); /* توهج أزرق خفيف جداً (شبه مختفي) */
+        } 
+        50% { 
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.7), 0 0 40px rgba(37, 99, 235, 0.3); /* أقصى درجات التوهج الأزرق */
+        } 
+    }
+
+    /* أنيميشن تنفس النقطة الصغيرة */
+    @keyframes dotBreathing { 
+        0%, 100% { 
+            box-shadow: 0 0 3px rgba(37, 99, 235, 0.2); 
+        } 
+        50% { 
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.8); 
+        } 
+    }
+  
+    .user-info-wrap { width: 100%; margin-bottom: 15px; }
+    .user-name { font-size: 18px; font-weight: 700; color: var(--msr-text-primary); margin-bottom: 5px; display: block; white-space: normal; width: 100%; line-height: 1.5 !important; }
+    
+    /* تنسيق الرتبة (نص) */
+    .user-rank { font-size: 12px; color: var(--msr-blue); background: rgba(37, 99, 235, 0.1); padding: 3px 10px; border-radius: 12px; margin-bottom: 5px; display: inline-block; border: 1px solid rgba(37, 99, 235, 0.2); }
+    
+    /* تنسيق الرتبة (صورة) */
+    .user-rank-img { display: block; margin-bottom: 5px; width: 100%; overflow: hidden; }
+    .user-rank-img img { max-width: 100% !important; height: auto !important; filter: none !important; border: none !important; border-radius: 0 !important; box-shadow: none !important; display: inline-block !important; }
+
+    .user-stats { width: 100%; text-align: right; margin-bottom: 0; }
+    .stat-row { display: flex; justify-content: space-between; padding: 8px 10px; background: #fff; margin-bottom: 6px; border-radius: var(--radius-sm); font-size: 13px; color: var(--msr-text-secondary); border: 1px solid var(--msr-border); line-height: 1.6 !important; }
+    .stat-row i { color: var(--msr-blue); font-size: 10px; margin-left: 5px; }
+    .stat-val { color: var(--msr-text-primary); font-weight: bold; }
+
+    /* ===== تنسيق الأوسمة ===== */
+    .dd_award { width: 100%; text-align: center; margin-top: 15px; padding: 10px; background: #fff; border-radius: var(--radius-sm); border: 1px solid var(--msr-border); display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
+    .dd_award img { max-width: 32px; max-height: 32px; object-fit: contain; filter: none !important; border: none !important; border-radius: 4px; box-shadow: none !important; }
+    .award_more { 
+        width: 100%; 
+        text-align: center; 
+        font-size: 20px; /* تكبير حجم السهم */ 
+        color: var(--msr-blue); 
+        cursor: pointer; 
+        margin-top: 10px; 
+        margin-bottom: 5px; 
+        font-weight: 600; 
+        background: transparent !important; /* إزالة الخلفية */
+        border: none !important; /* إزالة الإطار */
+        box-shadow: none !important; /* إزالة أي ظل */
+        padding: 0; 
+    }
+    
+    /* لضمان تطبيق التعديل على السهم سواء كان نصاً أو رابطاً أو صورة */
+    .award_more a, .award_more span { 
+        background: transparent !important; 
+        border: none !important; 
+        box-shadow: none !important; 
+        color: var(--msr-blue) !important; 
+        font-size: 20px !important; /* تكبير السهم إذا كان نصاً */
+    }
+    .award_more img { 
+        width: 24px !important; /* تكبير السهم إذا كان أيقونة صورة */
+        height: 24px !important; 
+        background: transparent !important; 
+        border: none !important; 
+        box-shadow: none !important; 
+        filter: none !important;
+    }
+
+    .contact-btns { display: flex; gap: 10px; justify-content: center; width: 100%; margin-top: 0; margin-bottom: 10px; padding: 5px 0; }
+    .contact-btns a { width: 36px; height: 36px; border-radius: 8px; background: #fff; display: inline-flex; align-items: center; justify-content: center; transition: all 0.3s ease; text-decoration: none; border: 1px solid var(--msr-border); }
+    .contact-btns a img { width: 16px; height: 16px; object-fit: contain; filter: none; opacity: 0.7; transition: 0.3s; }
+    .contact-btns a:hover { background: var(--msr-blue); border-color: var(--msr-blue); transform: translateY(-3px); box-shadow: 0 5px 15px var(--msr-accent-glow); }
+    .contact-btns a:hover img { filter: brightness(0) invert(1); opacity: 1; }
+
+    .post-content-area { flex:1; padding: 25px 30px; position: relative; display: flex; flex-direction: column; min-height: 400px; min-width: 0 !important; overflow-wrap: break-word; word-wrap: break-word; }
+    .post-meta-top { display: flex; justify-content: space-between; color: var(--msr-text-muted); font-size: 12px; margin-bottom: 20px; border-bottom: 1px solid var(--msr-border); padding-bottom: 10px; flex-shrink: 0; line-height: 1.6 !important; }
+    .post-meta-top a { color: inherit; text-decoration: none; }
+    .post-body-text { font-size: 15px; line-height: 2 !important; color: var(--msr-text-secondary); }
+    .post-body-text p { margin-bottom: 15px; line-height: 2 !important; }
+    .post-body-text a { color: var(--msr-blue) !important; text-decoration: none; font-weight: bold; transition: all 0.2s ease; }
+    .post-body-text a:hover { color: var(--msr-blue-dark) !important; text-decoration: underline; }
+    .post-body-text img { filter: none; border: 1px solid var(--msr-border); border-radius: 10px; transition: all 0.3s ease; max-width: 100%; height: auto; display: inline-block; margin: 10px 0; vertical-align: top; }
+    .post-body-text img:hover { border-color: var(--msr-blue); transform: scale(1.01); box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: zoom-in; }
+    .post-body-text img.smiley, .post-body-text img[alt*=":"], .post-body-text img[alt*=";"], .post-body-text img[alt*="p"] { filter: none !important; border: none !important; border-radius: 0 !important; vertical-align: middle; display: inline-block; transform: none !important; margin: 0 2px; box-shadow: none !important; }
+
+    .post-body-text code, .post-body-text pre, .post-body-text .codebox, .post-body-text div.codebox, .post-body-text blockquote { max-width: 100% !important; overflow-x: auto !important; display: block !important; padding: 15px !important; border-radius: 6px !important; margin: 10px 0 !important; filter: none !important; font-size: 14px; border: 1px solid var(--msr-border) !important; }
+    .post-body-text blockquote { background: var(--msr-card-bg-alt) !important; color: var(--msr-text-secondary) !important; border-right: 4px solid var(--msr-blue) !important; direction: rtl !important; text-align: right !important; white-space: pre-wrap !important; line-height: 1.8; }
+    blockquote cite { color: var(--msr-blue); display: block; margin-bottom: 3px; font-weight: 700; }
+    .post-body-text code, .post-body-text pre, .post-body-text .codebox, .post-body-text div.codebox { background: var(--msr-bg) !important; color: var(--msr-violet) !important; border-left: 4px solid var(--msr-violet) !important; direction: ltr !important; text-align: left !important; white-space: pre !important; font-family: monospace !important; }
+
+    .signature-box { margin-top: 30px; padding-top: 15px; border-top: 1px dashed var(--msr-border); font-size: 13px; color: var(--msr-text-muted); text-align: center; flex-shrink: 0; overflow: hidden; max-width: 100%; }
+    .signature-box img { max-width: 100%; filter: none !important; border: none !important; border-radius: 8px; }
+    .edited-message { font-size: 11px; color: var(--msr-text-muted); margin-top: 5px; font-style: italic; flex-shrink: 0; }
+
+    .post-tools { display: flex; gap: 8px; }
+    .post-tools a { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: var(--msr-card-bg-alt); border-radius: 8px; text-decoration: none; transition: all 0.3s ease; border: 1px solid var(--msr-border); color: var(--msr-text-muted); font-size: 14px; position: relative; }
+    .post-tools a img, .post-tools a i.material-symbols-outlined { display: none !important; }
+    .post-tools a:hover { background: var(--msr-blue); border-color: var(--msr-blue); color: #fff !important; transform: translateY(-3px); box-shadow: 0 5px 15px var(--msr-accent-glow); }
+    .post-tools a::after { font-family: "Font Awesome 6 Free"; font-weight: 900; }
+    .post-tools a[href*="mode=edit"]::after { content: "\f044"; }
+    .post-tools a[href*="mode=delete"]::after { content: "\f2ed"; }
+    .post-tools a[href*="mode=quote"]::after { content: "\f10e"; }
+    .post-tools a[href*="mode=ip"]::after { content: "\f05a"; }
+    .post-tools a[href*="report"]::after { content: "\f024"; }
+    .post-tools a[href*="thank"]::after { content: "\f004"; }
+    .post-tools a[href*="multiquote"]::after { content: "\f24d"; }
+
+    .post-likes-wrapper { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--msr-border); display: flex; justify-content: flex-start; gap: 15px; flex-shrink: 0; flex-wrap: wrap; width: 100%; }
+    .fa_like_div { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .rep-button { background: #fff !important; border: 1px solid var(--msr-border); color: var(--msr-text-secondary) !important; padding: 8px 16px; border-radius: 20px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s; font-size: 13px; line-height: normal; white-space: nowrap; flex-shrink: 0; height: auto; min-height: 38px; }
+    .rep-button i.material-symbols-outlined { font-size: 18px !important; margin: 0; }
+    .rep-button:hover { border-color: var(--msr-blue) !important; color: var(--msr-blue) !important; background: rgba(37, 99, 235, 0.05) !important; }
+    .rep-button.voted, .rep-button:active { border-color: var(--msr-blue) !important; color: var(--msr-blue) !important; background: rgba(37, 99, 235, 0.1) !important; font-weight: bold; }
+.rep-cat {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 2px 8px !important;
+    float: none !important;
+    line-height: 1 !important;
+    height: auto !important;
+    background: rgb(255 255 255) !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    min-width: 24px;
+    order: 1;
+}
+    .rep-button span:not(.rep-cat) { order: 2; }
+
+    .msr-quick-reply { background: var(--msr-card-bg); border: 1px solid var(--msr-border); border-radius: 16px; margin-top: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
+    .msr-quick-reply .h3 { color: var(--msr-blue); border: none; background: var(--msr-card-bg-alt); padding: 15px 25px; margin-top: 0; margin-bottom: 20px; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--msr-border); }
+    .msr-quick-reply .sceditor-container { width: 100% !important; border: 1px solid var(--msr-border) !important; background: #fff !important; border-radius: 8px; overflow: hidden; }
+    .msr-quick-reply .sceditor-toolbar { background: var(--msr-card-bg-alt) !important; border-bottom: 1px solid var(--msr-border) !important; padding: 8px; }
+    .msr-quick-reply .sceditor-container iframe, .msr-quick-reply .sceditor-container textarea { background: #fff !important; color: var(--msr-text-primary) !important; border: none !important; padding: 15px !important; min-height: 200px; font-size: 15px; }
+    .msr-quick-reply .form-buttons { margin-top: 25px; display: flex; justify-content: flex-end; gap: 15px; padding-bottom: 10px; }
+    .msr-quick-reply input.button1 { background: var(--msr-blue); color: white; padding: 12px 40px; border-radius: 50px; box-shadow: 0 4px 15px var(--msr-accent-glow); font-size: 15px; font-weight: bold; border: none; cursor: pointer; }
+    .msr-quick-reply input.button2 { background: transparent; color: var(--msr-text-secondary); border: 2px solid var(--msr-border); padding: 10px 35px; border-radius: 50px; font-size: 15px; font-weight: bold; cursor: pointer; }
+
+    .msr-float-btn { position: fixed; bottom: 30px; left: 30px; background: var(--msr-blue); color: #ffffff !important; width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 6px 20px var(--msr-accent-glow); z-index: 999; transition: transform 0.3s; text-decoration: none; }
+    .msr-float-btn i { color: #ffffff !important; padding: 0 !important; background: transparent !important; }
+    .msr-float-btn:hover { transform: scale(1.1) rotate(90deg); }
+    .msr-float-btn:hover i { color: #ffffff !important; }
+
+    @media (max-width: 768px) {
+        .post-layout { flex-direction: column; }
+        .post-sidebar { width: 100%; border-left: none; border-bottom: 1px solid var(--msr-border); flex-direction: row; flex-wrap: wrap; padding: 15px; text-align: right; gap: 15px; justify-content: flex-start; align-items: center; }
+        .user-avatar-wrap { width: 70px; height: 70px; margin-bottom: 0; margin-left: 0; flex-shrink: 0 !important; order: 1; }
+        .user-avatar-wrap img { border: 2px solid var(--msr-blue) !important; }
+        .user-info-wrap { flex: 1; min-width: 150px; order: 2; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+        .user-name { font-size: 15px; white-space: normal; line-height: 1.3; margin-bottom: 2px; }
+        .user-rank { font-size: 11px; padding: 2px 8px; margin-bottom: 0; }
+        .user-stats, .dd_award { display: none; }
+        .contact-btns { margin-top: 0; margin-right: auto; margin-left: 10px; order: 3; }
+        .topic-cover-banner { height: 250px; }
+        .topic-cover-content h2 { font-size: 20px; }
+        .msr-topic-header { text-align: center; justify-content: center; }
+        .msr-topic-title h1 { font-size: 18px; line-height: 1.6 !important; }
+        .topic-header-bar { flex-direction: column; gap: 10px; text-align: center; }
+        .topic-header-bar h1 { justify-content: center; }
+        .post-tools { justify-content: center; }
+        .msr-nav-grid { grid-template-columns: 1fr; }
+        .msr-mod-bar-label { display: none; }
+        .msr-mod-bar { flex-direction: column; padding: 15px; }
+        .msr-mod-form { width: 100%; flex-direction: column; }
+        .msr-mod-select { width: 100%; }
+        .msr-footer-row { flex-direction: column; gap: 20px; text-align: center; }
+        .msr-jump-hero { flex-direction: column; text-align: center; padding: 20px; }
+        .msr-jump-left { flex-direction: column; width: 100%; margin-bottom: 15px; }
+        .msr-jump-form { width: 100%; flex-direction: column; }
+        .msr-jump-select, .msr-jump-btn-hero { width: 100%; }
+        .msr-topic-top-bar { flex-direction: column !important; align-items: stretch !important; }
+        .msr-share-menu { justify-content: center; margin-top: 10px; }
+        .msr-footer-row-flex { flex-direction: column; align-items: center; text-align: center; }
+    }
+    
+    .quick-reply-textarea-wrap .sceditor-button { margin: 4px; border: 1px solid var(--msr-border) !important; }
+
+    .msr-footer-section { background: var(--msr-card-bg); border: 1px solid var(--msr-border); border-radius: var(--radius-main); padding: 25px; margin-top: 30px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 20px; }
+    
+    /* تنسيق صف المراقبة وأرقام الصفحات */
+    .msr-footer-row-flex { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--msr-border); }
+    
+    /* تنسيق زر متابعة الموضوع */
+    .msr-watch-topic { display: flex; align-items: center; }
+    .msr-watch-topic a { display: inline-flex; align-items: center; gap: 8px; background: var(--msr-card-bg-alt); border: 1px solid var(--msr-border); padding: 8px 18px; border-radius: 20px; color: var(--msr-text-primary); font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; }
+    .msr-watch-topic a:hover { border-color: var(--msr-blue); background: rgba(37, 99, 235, 0.05); color: var(--msr-blue); }
+.msr-footer-section .material-symbols-outlined {
+    color: #ffffff;
+    vertical-align: middle;
+    font-size: 20px;
+}
+
+/* === تنسيق خانة عدد الصفحات (أزرق للروابط، أسود للنص، مميز للصفحة الحالية) === */
+    .msr-pagination-wrap {
+        display: flex;
+        align-items: center;
+    }
+    
+    .pagination {
+        display: flex;
+        align-items: center;
+        gap: 8px; /* تقريب الأرقام لتكون متتابعة */
+        color: var(--msr-text-primary); /* الكلمات النصية الأسود */
+        font-weight: 700;
+        font-size: 16px;
+    }
+
+    .pagination a, .pagination span {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 35px;
+        height: 35px;
+        padding: 0;
+        margin: 0;
+        border-radius: 50%; /* شكل دائري للأرقام */
+        background: transparent !important; /* بدون خلفيات */
+        border: none !important; /* بدون إطارات */
+        box-shadow: none !important;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    /* الأرقام القابلة للنقر باللون الأزرق */
+    .pagination a {
+        color: var(--msr-blue) !important; 
+    }
+
+    /* تأثير مرور الماوس (الرقم يظهر باللون الأزرق الواضح مع خلفية مميزة) */
+    .pagination a:hover {
+        color: var(--msr-blue-dark) !important; /* الرقم باللون الأزرق الداكن الواضح */
+        background-color: rgba(37, 99, 235, 0.1) !important; /* خلفية زرقاء شفافة لتبريز الرقم */
+        transform: translateY(-3px) scale(1.1); /* تأثير طفو عند المرور */
+        border: none !important;
+        box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2) !important; /* ظل أزرق خفيف حول الرقم */
+    }
+
+    /* الكلمات النصية (غير النشطة) باللون الأسود */
+    .pagination span:not(.active) {
+        color: var(--msr-text-primary) !important;
+    }
+
+    /* تنسيق رقم الصفحة الحالية (لون أزرق واضح وبدون طبقات شفافة) */
+    .pagination span.active {
+        color: var(--msr-blue) !important; /* أزرق واضح بدلاً من البنفسجي */
+        font-weight: 900 !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        text-decoration: underline !important;
+        text-decoration-thickness: 3px !important; /* خط سميك مميز */
+        text-underline-offset: 5px !important;
+        cursor: default;
+    }
+    /* إخفاء أيقونات الصور القديمة */
+    .pagination img { display: none; }
+
+    .msr-nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .msr-nav-btn { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 18px; background: var(--msr-card-bg-alt); border: 1px solid var(--msr-border); border-radius: 12px; color: var(--msr-text-primary); text-decoration: none; font-weight: 700; font-size: 15px; transition: all 0.3s ease; position: relative; overflow: hidden; }
+    .msr-nav-btn i { font-size: 18px; color: var(--msr-text-muted); transition: 0.3s; }
+    .msr-nav-btn:hover { background: rgba(37, 99, 235, 0.05); border-color: var(--msr-blue); color: var(--msr-blue); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+    .msr-nav-btn:hover i { color: var(--msr-blue); transform: scale(1.2); }
+
+    .msr-mod-bar { background: var(--msr-card-bg-alt); border: 1px solid var(--msr-border); border-radius: 12px; padding: 15px 30px; margin: 10px 0 30px 0; display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .msr-mod-bar-label { color: var(--msr-violet); font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .msr-mod-bar-form { display: flex; align-items: center; gap: 10px; }
+    .msr-mod-select { background-color: #fff; color: var(--msr-text-primary); border: 1px solid var(--msr-border); padding: 10px 15px; border-radius: 8px; cursor: pointer; outline: none; min-width: 200px; height: 45px; transition: 0.3s; appearance: none; background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23475569%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: left 12px top 50%; background-size: 12px auto; padding-left: 35px; direction: rtl; }
+    .msr-mod-select:hover { border-color: var(--msr-violet); }
+    .msr-mod-select:focus { border-color: var(--msr-violet); box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1); }
+
+    .msr-mod-submit { background: var(--msr-violet); border: 1px solid var(--msr-violet); color: #fff; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+    .msr-mod-submit:hover { background: var(--msr-blue); border-color: var(--msr-blue); color: #fff; box-shadow: 0 0 15px var(--msr-accent-glow); }
+
+    .msr-jump-hero { margin-top: 20px; background: var(--msr-card-bg); border: 1px solid var(--msr-border); border-radius: 15px; padding: 30px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
+    .msr-jump-hero::before { content: ''; position: absolute; top: -50%; right: -10%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 70%); pointer-events: none; }
+    .msr-jump-left { display: flex; align-items: center; gap: 20px; flex: 1; position: relative; z-index: 1; }
+    .msr-jump-icon { width: 64px; height: 64px; border-radius: 16px; background: linear-gradient(135deg, var(--msr-blue), var(--msr-cyan)); display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 8px 25px var(--msr-accent-glow); }
+    .msr-jump-icon i { font-size: 24px; color: #fff; }
+    .msr-jump-text { display: flex; flex-direction: column; gap: 6px; }
+    .msr-jump-title { font-size: 24px; font-weight: 800; color: var(--msr-text-primary); margin: 0; letter-spacing: -0.5px; }
+    .msr-jump-desc { font-size: 14px; color: var(--msr-text-secondary); margin: 0; line-height: 1.6 !important; }
+    .msr-jump-form { display: flex; align-items: center; gap: 10px; z-index: 2; flex-wrap: wrap; }
+    .msr-jump-select { background-color: #fff; color: var(--msr-text-primary); border: 1px solid var(--msr-border); padding: 12px 15px; border-radius: 8px; cursor: pointer; outline: none; min-width: 250px; height: 50px; transition: 0.3s; appearance: none; background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23475569%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: left 12px top 50%; background-size: 12px auto; padding-left: 35px; direction: rtl; }
+    .msr-jump-select:hover { border-color: var(--msr-blue); }
+    .msr-jump-btn-hero { display: inline-flex; align-items: center; gap: 10px; padding: 12px 30px; background: var(--msr-blue); color: #fff; font-size: 15px; font-weight: 700; border: none; border-radius: 12px; cursor: pointer; text-decoration: none; transition: all 0.3s; box-shadow: 0 4px 15px var(--msr-accent-glow); }
+    .msr-jump-btn-hero:hover { transform: translateY(-2px); background: var(--msr-blue-dark); box-shadow: 0 6px 20px var(--msr-accent-glow); }
+
+    /* ===== تنسيق شريط المشاركين وأزرار المشاركة ===== */
+.msr-topic-top-bar {
+    border-radius: var(--msr-radius-main, 12px);
+    padding: 15px 25px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    direction: rtl !important;
+}
+    .poster-list { background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 !important; margin: 0 !important; width: auto !important; flex: 1; min-width: 300px; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; direction: rtl !important; text-align: right !important; float: none !important; }
+    .poster-list .h3 { margin: 0 !important; color: var(--msr-blue); font-size: 15px; font-weight: 700; white-space: nowrap; display: flex; align-items: center; gap: 8px; float: none !important; }
+    .poster-list .h3::before { content: "\f0c0"; font-family: "Font Awesome 6 Free"; font-weight: 900; }
+    .poster-list ul { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; float: none !important; direction: rtl !important; text-align: right !important; }
+    .poster-list li { display: inline-flex; align-items: center; gap: 5px; background: var(--msr-card-bg-alt); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--msr-border); font-size: 12px; transition: all 0.3s ease; float: none !important; }
+    .poster-list li:hover { border-color: var(--msr-blue); background: rgba(37, 99, 235, 0.05); transform: translateY(-2px); box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
+    .poster-list li a { text-decoration: none; color: var(--msr-text-primary); font-weight: 600; }
+    .poster-list li a:hover { color: var(--msr-blue); }
+    .msr-share-menu { display: flex; align-items: center; gap: 10px; flex-shrink: 0; position: relative; }
+    .plus-menu-wrap { position: relative; display: inline-block; }
+    .plus-menu-wrap a[href*="plus_menu"] { background: var(--msr-card-bg-alt); border: 1px solid var(--msr-border); padding: 8px 18px; border-radius: 20px; color: var(--msr-text-primary); font-size: 13px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: none; }
+    .plus-menu-wrap a[href*="plus_menu"]:hover { border-color: var(--msr-blue); background: rgba(37, 99, 235, 0.05); color: var(--msr-blue); }
+    .plus-menu-wrap a[href*="plus_menu"]::before { content: "\f141"; font-family: "Font Awesome 6 Free"; font-weight: 900; font-size: 14px; }
+    .plus-menu-wrap img { display: none !important; }
+    .plus-menu-wrap ul, .plus-menu-wrap div.dropdown { position: absolute !important; top: 100% !important; left: auto !important; right: 0 !important; background: var(--msr-card-bg) !important; border: 1px solid var(--msr-border) !important; border-radius: 8px !important; box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important; padding: 5px !important; margin-top: 5px !important; z-index: 9999 !important; min-width: 220px !important; }
+    .plus-menu-wrap ul li, .plus-menu-wrap div.dropdown a { background: transparent !important; border: none !important; padding: 8px 12px !important; border-radius: 6px !important; color: var(--msr-text-primary) !important; font-size: 13px; text-decoration: none !important; display: flex !important; align-items: center !important; gap: 8px; }
+    .plus-menu-wrap ul li:hover, .plus-menu-wrap div.dropdown a:hover { background: var(--msr-card-bg-alt) !important; color: var(--msr-blue) !important; }
+    #addthis-toolbar { position: relative; display: inline-block; }
+    #addthis-toolbar .btn-floating-left { background: var(--msr-card-bg-alt); border: 1px solid var(--msr-border); padding: 8px 18px; border-radius: 20px; color: var(--msr-text-primary); font-size: 13px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: none; font-family: inherit; }
+    #addthis-toolbar .btn-floating-left:hover { border-color: var(--msr-blue); background: rgba(37, 99, 235, 0.05); color: var(--msr-blue); }
+    #addthis-toolbar .btn-floating-left::before { content: "\f1e0"; font-family: "Font Awesome 6 Free"; font-weight: 900; font-size: 14px; margin-left: 5px; }
+    #addthis-toolbar .btn-floating-left i, #addthis-toolbar .btn-floating-left img { display: none !important; }
+    #addthis-toolbar .addthis-toolbar-btn { position: absolute !important; top: 100% !important; left: auto !important; right: 0 !important; background-color: var(--msr-card-bg) !important; border: 1px solid var(--msr-border) !important; border-radius: 8px !important; box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important; padding: 10px !important; margin-top: 5px !important; z-index: 1000 !important; width: auto !important; }
+    #addthis-toolbar .addthis-toolbar-btn a { background: transparent !important; border: none !important; padding: 8px 12px !important; border-radius: 6px !important; color: var(--msr-text-primary) !important; font-size: 13px !important; display: flex !important; align-items: center !important; gap: 8px !important; white-space: nowrap; }
+    #addthis-toolbar .addthis-toolbar-btn a:hover { background: var(--msr-card-bg-alt) !important; color: var(--msr-blue) !important; }
+  
+
+  span.page-sep {
+    display: none !important;
+}
+
+.topic-header-bar .fa-solid, .fas {
+    color: #94a3b8;
+    border-radius: 100px;
+    padding: 5px;
+}
+</style>
+
+<div class="msr-topic-wrapper">
+    
+    <!-- عنوان الموضوع الرئيسي -->
+    <div class="msr-topic-header">
+        <div class="msr-topic-title">
+            <h1>
+                <i class="fas fa-film"></i>
+                <a href="{TOPIC_URL}" style="text-decoration: none; color: inherit;">{TOPIC_TITLE}</a>
+            </h1>
+            <!-- BEGIN switch_push_direct_send -->
+            <div id="push-bell" style="cursor: pointer; display: inline-flex; align-items: center; margin-right: 10px; color: var(--msr-blue);" title="{switch_push_direct_send.L_PUSH_SEND}">
+                <i class="material-symbols-outlined">notifications</i>
+            </div>
+            <!-- END switch_push_direct_send -->
+        </div>
+        <div class="msr-topic-actions">
+            <!-- BEGIN switch_user_authpost -->
+            <a href="{U_POST_NEW_TOPIC}" class="msr-btn-small msr-btn-primary">
+                <i class="fas fa-plus"></i> موضوع جديد
+            </a>
+            <!-- END switch_user_authpost -->
+            <!-- BEGIN switch_user_authreply -->
+            <a href="{U_POST_REPLY_TOPIC}" class="msr-btn-small msr-btn-secondary">
+                <i class="fas fa-reply"></i> رد سريع
+            </a>
+            <!-- END switch_user_authreply -->
+        </div>
+    </div>
+
+    <!-- مسار التنقل -->
+    <div style="margin-bottom: 15px; font-size: 13px; color: var(--msr-text-muted);">
+        <a href="{U_INDEX}" style="color: var(--msr-text-secondary);"><i class="fas fa-home"></i> الرئيسية</a>
+        <span style="margin: 0 8px;">/</span>
+        {NAV_CAT_DESC}
+    </div>
+
+    <!-- شريط المشاركين وأزرار المشاركة (شاطر / المزيد) -->
+    <div class="msr-topic-top-bar">
+        <div class="poster-list-container">
+            {POSTERS_LIST}
+        </div>
+        
+        <div class="msr-share-menu">
+            <!-- BEGIN switch_plus_menu -->
+            <div class="plus-menu-wrap">
+                <script type="text/javascript">//<![CDATA[
+                    var url_favourite = '{U_FAVOURITE_JS_PLUS_MENU}';
+                    var url_newposts = '{U_NEWPOSTS_JS_PLUS_MENU}';
+                    var url_egosearch = '{U_EGOSEARCH_JS_PLUS_MENU}';
+                    var url_unanswered = '{U_UNANSWERED_JS_PLUS_MENU}';
+                    var url_watchsearch = '{U_WATCHSEARCH_JS_PLUS_MENU}';
+                    insert_plus_menu_new('f{FORUM_ID}&t={TOPIC_ID}','{JS_SESSION_ID}', {JS_AUTH_FAVOURITES});
+                //]]>
+                </script>
+            </div>
+            <div id="addthis-toolbar">
+                <div class="btn-floating-left" tabindex="100">
+                    {L_SHARE}
+                </div>
+                <div class="addthis-toolbar-btn" style="position:absolute; z-index:1000; display: none; background-color: #fff;">
+                    {switch_plus_menu.SOCIAL_BUTTONS}
+                </div>
+            </div>
+            {switch_plus_menu.JS_SOCIAL_BUTTONS}
+            <!-- END switch_plus_menu -->
+        </div>
+    </div>
+
+    {POLL_DISPLAY}
+
+    <!-- بداية عرض المشاركات -->
+    <!-- BEGIN postrow -->
+    <!-- BEGIN hidden -->
+    <div class="post hidden" style="display: none;">
+        {postrow.hidden.MESSAGE}
+    </div>
+    <!-- END hidden -->
+
+    <!-- BEGIN displayed -->
+    <div id="p{postrow.displayed.U_POST_ID}" class="topic-container {postrow.displayed.ROW_COUNT} {postrow.displayed.ONLINE_IMG_NEW} post--{postrow.displayed.U_POST_ID}"{postrow.displayed.THANK_BGCOLOR} style="{postrow.displayed.DISPLAYABLE_STATE}">
+        
+        <!-- === كود صورة الغلاف === -->
+        <div class="topic-cover-banner" data-post-id="{postrow.displayed.U_POST_ID}">
+            <div class="topic-cover-bg"></div>
+            <div class="topic-cover-overlay"></div>
+            <div class="topic-cover-content">
+                <h2></h2>
+                <div class="cover-meta">
+                    <i class="far fa-clock"></i> <span class="cover-date"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Topic Header Bar -->
+        <div class="topic-header-bar">
+            <h1 style="font-size: 15px;">
+                <a href="{postrow.displayed.POST_URL}" style="color: var(--msr-text-secondary); text-decoration: none;">
+                    <i class="fas fa-reply" style="font-size: 12px; margin-left: 5px;"></i>
+                    {postrow.displayed.POST_SUBJECT}
+                </a>
+            </h1>
+            
+            <div class="post-tools">
+                {postrow.displayed.QUOTE_IMG} 
+                {postrow.displayed.EDIT_IMG} 
+                {postrow.displayed.DELETE_IMG} 
+                {postrow.displayed.IP_IMG}
+            </div>
+        </div>
+
+        <!-- Post Layout -->
+        <div class="post-layout">
+            
+            <!-- Profile Sidebar -->
+            <aside class="post-sidebar" id="profile{postrow.displayed.U_POST_ID}">
+                <div class="user-avatar-wrap">
+                    {postrow.displayed.POSTER_AVATAR}
+                    <div class="status-dot {postrow.displayed.ONLINE_IMG_NEW}"></div>
+                </div>
+                
+                <div class="user-info-wrap">
+                    <span class="user-name">{postrow.displayed.POSTER_NAME}</span>
+                    <span class="user-rank">{postrow.displayed.POSTER_RANK_NEW}</span>
+                    <span class="user-rank-img">{postrow.displayed.RANK_IMAGE}</span>
+                </div>
+                
+                <div class="user-stats">
+                    <!-- BEGIN profile_field -->
+                    <div class="stat-row">
+                        <span><i class="fas fa-info-circle"></i> {postrow.displayed.profile_field.LABEL}</span> 
+                        <span class="stat-val">{postrow.displayed.profile_field.CONTENT}</span>
+                    </div>
+                    <!-- END profile_field -->
+                    {postrow.displayed.POSTER_RPG}
+                </div>
+
+                <!-- خانة الأوسمة أسفل البيانات -->
+                <div {postrow.displayed.AWARDS_SHOW} class="dd_award {postrow.displayed.PROFILE_POSITION} box-body">
+                    {postrow.displayed.AWARDS}
+                </div>
+                <div class="award_more box-body"></div>
+
+                <div class="contact-btns">
+                    {postrow.displayed.PROFILE_IMG} 
+                    {postrow.displayed.PM_IMG} 
+                    {postrow.displayed.EMAIL_IMG} 
+                    <!-- BEGIN contact_field --> 
+                    {postrow.displayed.contact_field.CONTENT} 
+                    <!-- END contact_field -->
+                </div>
+            </aside>
+
+            <!-- Content Area -->
+            <main class="post-content-area">
+                <div class="post-meta-top">
+                    <span><i class="far fa-clock"></i> {postrow.displayed.POST_DATE_NEW}</span>
+                    <a href="{postrow.displayed.POST_URL}" name="{postrow.displayed.U_POST_ID}"><i class="fas fa-hashtag"></i> {postrow.displayed.COUNT_POSTS_NUMBER}</a>
+                </div>
+
+                <div class="post-body-text">
+                    {postrow.displayed.MESSAGE}
+                    
+                    <!-- المرفقات -->
+                    <!-- BEGIN switch_attachments -->
+                    <dl class="attachbox">
+                        <dt>{postrow.displayed.switch_attachments.L_ATTACHMENTS}</dt>
+                        <dd>
+                            <!-- BEGIN switch_post_attachments -->
+                            <dl class="file">
+                                <dt>
+                                    <img src="{postrow.displayed.switch_attachments.switch_post_attachments.U_IMG}" alt="" style="vertical-align:middle"/> 
+                                    <a href="{postrow.displayed.switch_attachments.switch_post_attachments.U_ATTACHMENT}" target="_blank">{postrow.displayed.switch_attachments.switch_post_attachments.DISPLAY_ATTACHMENT}</a>
+                                </dt>
+                                <dd>({postrow.displayed.switch_attachments.switch_post_attachments.FILE_SIZE}) {postrow.displayed.switch_attachments.switch_post_attachments.NB_DL}</dd>
+                            </dl>
+                            <!-- END switch_post_attachments -->
+                        </dd>
+                    </dl>
+                    <!-- END switch_attachments -->
+
+                    <!-- التوقيع -->
+                    <!-- BEGIN switch_signature -->
+                    <div class="signature-box" id="sig{postrow.displayed.U_POST_ID}">{postrow.displayed.SIGNATURE_NEW}</div>
+                    <!-- END switch_signature -->
+                </div>
+
+                <div class="edited-message">
+                    {postrow.displayed.EDITED_MESSAGE}
+                </div>
+
+                <!-- أزرار الإعجاب -->
+                <div class="post-likes-wrapper">
+                    <!-- BEGIN switch_likes_active -->
+                    <div class="fa_like_div">
+                        <button class="rep-button {postrow.displayed.switch_likes_active.C_VOTE_LIKE}" data-href="{postrow.displayed.switch_likes_active.U_VOTE_LIKE}" data-href-rm="{postrow.displayed.switch_likes_active.U_VOTE_RM_LIKE}">
+                            <span class="rep-cat">
+                                <i class="material-symbols-outlined">thumb_up</i>
+                                {postrow.displayed.switch_likes_active.COUNT_VOTE_LIKE}
+                            </span>
+                            <span>{postrow.displayed.switch_likes_active.L_LIKE}</span>
+                        </button>
+                        <!-- BEGIN switch_dislike_button -->
+                        <button class="rep-button {postrow.displayed.switch_likes_active.switch_dislike_button.C_VOTE_DISLIKE}" data-href="{postrow.displayed.switch_likes_active.switch_dislike_button.U_VOTE_DISLIKE}" data-href-rm="{postrow.displayed.switch_likes_active.switch_dislike_button.U_VOTE_RM_LIKE}">
+                            <span class="rep-cat">
+                                <i class="material-symbols-outlined">thumb_down</i>
+                                {postrow.displayed.switch_likes_active.switch_dislike_button.COUNT_VOTE_DISLIKE}
+                            </span>
+                            <span>{postrow.displayed.switch_likes_active.switch_dislike_button.L_DISLIKE}</span>
+                        </button>
+                        <!-- END switch_dislike_button -->
+                        <!-- BEGIN switch_like_list -->
+                        {postrow.displayed.switch_likes_active.switch_like_list.D_LIKE_LIST}
+                        <!-- END switch_like_list -->
+                        <!-- BEGIN switch_dislike_list -->
+                        {postrow.displayed.switch_likes_active.switch_dislike_list.D_DISLIKE_LIST}
+                        <!-- END switch_dislike_list -->
+                    </div>
+                    <!-- END switch_likes_active -->
+                </div>
+
+            </main>
+        </div>
+    </div>
+    <!-- END displayed -->
+    <!-- END postrow -->
+
+    <!-- ================== MOD TOOLS BAR ================== -->
+    <!-- BEGIN viewtopic_bottom -->
+    <div class="msr-mod-bar">
+        <div class="msr-mod-bar-label">
+            <i class="fas fa-shield-alt"></i>
+            {L_MOD_TOOLS}
+        </div>
+        <form method="get" action="{S_FORM_MOD_ACTION}" class="msr-mod-bar-form">
+            <input type="hidden" name="t" value="{TOPIC_ID}" />
+            <input type="hidden" name="{SECURE_ID_NAME}" value="{SECURE_ID_VALUE}" />
+            {S_SELECT_MOD}
+            <input class="msr-mod-submit liteoption" type="submit" value="{L_GO}" />
+        </form>
+    </div>
+    <!-- END viewtopic_bottom -->
+
+    <!-- ================== FOOTER SECTION START ================== -->
+    <div class="msr-footer-section">
+        
+        <!-- صف متابعة الموضوع وأرقام الصفحات -->
+        <div class="msr-footer-row-flex">
+            <!-- زر متابعة الموضوع (يمين) -->
+            <!-- BEGIN switch_user_logged_in -->
+            <!-- BEGIN watchtopic -->
+            <div class="msr-watch-topic">{S_WATCH_TOPIC}</div>
+            <!-- END watchtopic -->
+            <!-- END switch_user_logged_in -->
+
+            <!-- أرقام الصفحات (يسار) -->
+            <div class="msr-pagination-wrap">
+                <div class="pagination">{PAGINATION}</div>
+            </div>
+        </div>
+
+        <!-- BEGIN switch_isconnect -->
+        <div class="msr-nav-grid">
+            <a href="{U_VIEW_OLDER_TOPIC}" class="msr-nav-btn"><i class="fas fa-arrow-right"></i><span>الموضوع السابق</span></a>
+            <a href="{U_VIEW_NEWER_TOPIC}" class="msr-nav-btn"><span>الموضوع التالي</span><i class="fas fa-arrow-left"></i></a>
+        </div>
+        <!-- END switch_isconnect -->
+        <div class="msr-jump-hero">
+            <div class="msr-jump-left">
+                <div class="msr-jump-icon"><i class="fas fa-arrow-right"></i></div>
+                <div class="msr-jump-text">
+                    <h3 class="msr-jump-title">القفز للقسم</h3>
+                    <p class="msr-jump-desc">اختر القسم الذي تريد الانتقال إليه</p>
+                </div>
+            </div>
+            <form action="{S_JUMPBOX_ACTION}" method="get" name="jumpbox" onsubmit="if(document.jumpbox.f.value == -1){return false;}" class="msr-jump-form">
+                {S_JUMPBOX_SELECT}
+                <button type="submit" class="msr-jump-btn-hero"><span>انتقل إلى</span></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- مواضيع مشابهة -->
+    <!-- BEGIN promot_trafic -->
+    <div class="topic-container" style="padding: 20px; margin-top: 60px;">
+        <h3 style="border-bottom: 1px solid var(--msr-border); padding-bottom: 10px; color: var(--msr-blue); margin-top: 0;">{PROMOT_TRAFIC_TITLE}</h3>
+        <div id="ptrafic_close" style="display: none;">{postrow.displayed.MESSAGE}</div>
+        <div id="ptrafic_open" style="display: block;">
+            <ul style="list-style: none; padding: 0;">
+                <!-- BEGIN link -->
+                <li style="margin: 10px 0;">
+                    <i class="fas fa-link" style="color: var(--msr-blue); margin-left: 8px;"></i>
+                    <a href="{promot_trafic.link.U_HREF}" target="_blank" style="color: var(--msr-text-primary); text-decoration: none;">{promot_trafic.link.TITLE}</a>
+                </li>
+                <!-- END link -->
+            </ul>
+        </div>
+    </div>
+    <!-- END promot_trafic -->
+
+    <!-- قسم الرد السريع -->
+    <!-- BEGIN switch_user_logged_in -->
+    <a name="quickreply"></a>
+    <div class="msr-quick-reply">{QUICK_REPLY_FORM}</div>
+    <!-- END switch_user_logged_in -->
+
+</div> <!-- end wrapper -->
+
+<!-- زر الرد العائم -->
+<!-- BEGIN switch_user_authreply -->
+<a href="{U_POST_REPLY_TOPIC}" class="msr-float-btn"><i class="fas fa-pen"></i></a>
+<!-- END switch_user_authreply -->
+
+<script type="text/javascript">
+//<![CDATA[
+ $(document).ready(function() {
+    <!-- BEGIN switch_push_direct_send -->
+    $('#push-answer').jqm({toTop: true});
+    $('#push-bell').click(function(){ return sendWebPush({TOPIC_ID}); });
+    function sendWebPush(tId){ $.get("/ajax_push.php?topicID=" + tId).done(showPushAnswer); }
+    function showPushAnswer(data) {
+        $('#push-answer').html(data).jqmShow();
+        $('.jqmOverlay').bgiframe();
+        $('#push-answer').bgiframe();
+    }
+    <!-- END switch_push_direct_send -->
+    
+    // تطبيق كلاسات التنسيق على القوائم
+    $('.msr-jump-form select').addClass('msr-jump-select');
+    $('.msr-mod-bar-form select').addClass('msr-mod-select');
+
+    // === كود الذكاء لتحويل الصورة الأولى إلى غلاف ===
+    var $firstPost = $('.post--1');
+    
+    if ($firstPost.length) {
+        var $bodyText = $firstPost.find('.post-body-text');
+        var $firstImg = $bodyText.find('img').not('.smiley').not('[alt*=":"]').not('[alt*=";"]').not('[alt*="p"]').first();
+        
+        if ($firstImg.length) {
+            var imgSrc = $firstImg.attr('src');
+            $firstPost.find('.topic-cover-bg').css('background-image', 'url(' + imgSrc + ')');
+            $firstPost.find('.topic-cover-banner').css('display', 'block');
+            
+            var topicTitle = $('.msr-topic-title h1 a').text();
+            var postDate = $firstPost.find('.post-meta-top span:first').text();
+            
+            $firstPost.find('.topic-cover-content h2').text(topicTitle);
+            $firstPost.find('.cover-date').text(postDate);
+            
+            $firstImg.hide();
+            $firstImg.parent('p').css('margin-bottom', '15px'); 
+        }
+    }
+});
+//]]>
+</script>
