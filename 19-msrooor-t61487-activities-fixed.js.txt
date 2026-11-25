@@ -1,0 +1,171 @@
+document.addEventListener("DOMContentLoaded", () => {
+  if (!document.querySelector('link[href*="font-awesome"]')) {
+    const fa = document.createElement("link");
+    fa.rel = "stylesheet";
+    fa.href =
+      "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css";
+    document.head.appendChild(fa);
+  }
+  const defaultSettings = { sound: true, numbering: true };
+  const targetFeed = document.querySelector('.page-discover');
+  if (!targetFeed) return;
+  function readStored(key, fallback) {
+    try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch (_) { return fallback; }
+  }
+  function saveStored(key, value) {
+    try { localStorage.setItem(key, value); } catch (_) {}
+  }
+  let settings = readStored('activitySettings', defaultSettings);
+  if (!settings || typeof settings !== 'object' || Array.isArray(settings)) settings = {...defaultSettings};
+  const soundCheckbox = document.getElementById("setting-sound");
+  const numberingCheckbox = document.getElementById("setting-numbering");
+  const settingsPanel = document.getElementById("settings-panel");
+  if (soundCheckbox) soundCheckbox.checked = settings.sound;
+  if (numberingCheckbox) numberingCheckbox.checked = settings.numbering;
+  function saveSettings() {
+    if (soundCheckbox) settings.sound = soundCheckbox.checked;
+    if (numberingCheckbox) settings.numbering = numberingCheckbox.checked;
+    saveStored("activitySettings", JSON.stringify(settings));
+  }
+  if (soundCheckbox) soundCheckbox.addEventListener("change", saveSettings);
+  if (numberingCheckbox)
+    numberingCheckbox.addEventListener("change", saveSettings);
+  const settingsToggle = document.getElementById("settings-toggle");
+  if (settingsToggle && settingsPanel) {
+    settingsToggle.addEventListener("click", () => {
+      settingsPanel.classList.toggle("visible");
+    });
+  }
+  const config = {
+    "activity-type-0": { icon: "fa-user-plus", color: "#4dabf7" },
+    "activity-type-1": { icon: "fa-file-alt", color: "#339af0" },
+    "activity-type-2": { icon: "fa-comments", color: "#51cf66" },
+    "activity-type-3": { icon: "fa-trophy", color: "#fcc419" },
+    "activity-type-4": { icon: "fa-image", color: "#ae3ec9" },
+    "activity-type-6": { icon: "fa-bullhorn", color: "#ff922b" },
+    "activity-type-7": { icon: "fa-calendar-alt", color: "#ff6b6b" },
+    "activity-type-8": { icon: "fa-user-edit", color: "#868e96" },
+    "activity-type-9": { icon: "fa-poll", color: "#20c997" },
+    default: { icon: "fa-bell", color: "#adb5bd" },
+  };
+  let lastActivitiesIds = readStored('msrActivityIdsV2', []);
+  if (!Array.isArray(lastActivitiesIds)) lastActivitiesIds = [];
+  let isFetching = false;
+  async function loadActivities() {
+    if (isFetching) return;
+    isFetching = true;
+    try {
+      const response = await fetch("/discover?t=" + Date.now());
+      const text = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(text, "text/html");
+      const newActivitiesData = [];
+      const currentIds = new Set();
+      let dailyCounter = 1;
+      const groups = doc.querySelectorAll(".activity-date-group");
+      groups.forEach((group) => {
+        let headerDate = "";
+        const internalDate = group.querySelector(
+          ".block-header span,h2.cattitle, .table-title, h2.date-header, .maintitle",
+        );
+        if (internalDate) {
+          headerDate = internalDate.textContent.trim();
+        }
+        if (!headerDate) {
+          const dateSelectors =
+            "h2.cattitle, .table-title, h2.date-header, .maintitle";
+          const allHeaders = Array.from(doc.querySelectorAll(dateSelectors));
+          const precedingHeaders = allHeaders.filter(
+            (h) =>
+              h.compareDocumentPosition(group) &
+              Node.DOCUMENT_POSITION_FOLLOWING,
+          );
+          if (precedingHeaders.length > 0) {
+            headerDate =
+              precedingHeaders[precedingHeaders.length - 1].textContent.trim();
+          }
+        }
+        headerDate = headerDate || "اليوم";
+        const isToday =
+          headerDate.includes("اليوم") || headerDate.includes("Today");
+        group.querySelectorAll(".feed-item").forEach((item) => {
+          const img = item.style
+            .getPropertyValue("--activity-image")
+            .replace(/url\(["']?/, "")
+            .replace(/["']?\)/, "");
+          const typeClass =
+            Object.keys(config).find((cls) => item.classList.contains(cls)) ||
+            "default";
+          const { icon, color } = config[typeClass];
+          const textEl = item.querySelector(".text");
+          if (!textEl) return;
+          const links = textEl ? Array.from(textEl.querySelectorAll("a")) : [];
+          const userHtml = links[0]?.innerHTML || "";
+          const userLink = links[0]?.getAttribute("href") || "#";
+          const topicLink = links.length > 1 ? links[links.length - 1] : null;
+          const topic = topicLink ? topicLink.textContent.trim() : "";
+          const link = topicLink ? topicLink.getAttribute("href") : "#";
+          const activityId = btoa(
+            unescape(encodeURIComponent(link + userLink + topic + headerDate)),
+          );
+          if (currentIds.has(activityId)) return;
+          currentIds.add(activityId);
+          const textClone = textEl.cloneNode(true);
+          textClone
+            .querySelectorAll("a, img, .act-thumb, .award, .act-icon")
+            .forEach((n) => n.remove());
+          const description = textClone.textContent.replace(/\s+/g, " ").trim();
+          const isBrandNew =
+            lastActivitiesIds.length > 0 &&
+            !lastActivitiesIds.includes(activityId);
+          let todayBadgeHtml = "";
+          if (isToday && settings.numbering) {
+            todayBadgeHtml = `<span class="today-badge">اليوم${dailyCounter}</span>`;
+            dailyCounter++;
+          }
+          newActivitiesData.push({
+            id: activityId,
+            html: `             <div class="custom-item ${isBrandNew ? "new-activity-blink" : ""}"data-id="${activityId}">               <div class="avatar-wrapper-activity">                 <img src="${img}"class="avatar-activity"loading="lazy"/>                 <span class="activity-type-badge"style="background-color: ${color}">                   <i class="fas ${icon}"></i>                 </span>               </div>               <div class="details">                 <div style="display:flex; justify-content:space-between; align-items:center;">                   <div class="desc">${description}</div>                   ${todayBadgeHtml}                 </div>                 ${topic ? `<a href="${link}"class="title">${topic}</a>` : ""}                 <div class="meta">                   ${userHtml ? `<a href="${userLink}"class="user">${userHtml}</a>•` : ""}                   <span class="date">${headerDate}</span>                 </div>               </div>             </div>`,
+          });
+        });
+      });
+      const target = document.querySelector(".page-discover");
+      if (!target) {
+        isFetching = false;
+        return;
+      }
+      const currentIdsArray = Array.from(currentIds);
+      if (
+        JSON.stringify(currentIdsArray) !== JSON.stringify(lastActivitiesIds)
+      ) {
+        if (
+          lastActivitiesIds.length > 0 &&
+          currentIdsArray.some((id) => !lastActivitiesIds.includes(id))
+        ) {
+          playBellSound();
+        }
+        const finalHtml = newActivitiesData.map((d) => d.html).join("");
+        target.innerHTML = `<div class="custom-feed">${finalHtml}</div>`;
+        lastActivitiesIds = currentIdsArray;
+        saveStored(
+          "msrActivityIdsV2",
+          JSON.stringify(currentIdsArray),
+        );
+
+      }
+    } catch (err) {
+      console.error("Fetch error:", err);
+    } finally {
+      isFetching = false;
+    }
+  }
+  function playBellSound() {
+    if (settings.sound) {
+      new Audio("https://cdn.pixabay.com/audio/2022/03/15/audio_783856af9d.mp3")
+        .play()
+        .catch(() => {});
+    }
+  }
+  loadActivities();
+  setInterval(loadActivities, 4000);
+});
