@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       const currentIdsArray = Array.from(currentIds);
       if (
-        JSON.stringify(currentIdsArray) !== JSON.stringify(lastActivitiesIds)
+        !target.querySelector(".custom-item") || JSON.stringify(currentIdsArray) !== JSON.stringify(lastActivitiesIds)
       ) {
         if (
           lastActivitiesIds.length > 0 &&
